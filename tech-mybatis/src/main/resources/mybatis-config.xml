@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!-- 引入外部资源配置文件 -->
+    <properties resource="jdbc.properties"/>
+
+    <settings>
+        <!-- 开启驼峰自动映射 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 设置二级缓存开关 默认开启 -->
+        <setting name="cacheEnabled" value="true"/>
+        <!-- 延迟加载的开关 默认关闭-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--
+            true启用时，当延迟加载开启时访问对象中一个懒对象属性时，将完全加载这个对象的所有懒对象属性。
+            false，当延迟加载时，按需加载对象属性（即访问对象中一个懒对象属性，不会加载对象中其他的懒对象属性）。
+            默认为false
+         -->
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+
+    <typeAliases>
+        <!-- 别名 type 指定java对象类型 alias 别名名称 -->
+         <typeAlias type="com.laravelshao.learning.mybatis.pojo.User" alias="User"/>
+        <!-- 指定扫描包 Mybatis会将该包下所有类都生成别名(别名首字母不区分大小写 推荐大写) -->
+        <package name="com.laravelshao.learning.mybatis.pojo"/>
+    </typeAliases>
+
+    <!-- 配置分页插件 -->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <property name="dialect" value="mysql"/>
+            <!-- 使用RowBounds分页是否进行count查询 默认false-->
+            <property name="rowBoundsWithCount" value="true"/>
+        </plugin>
+    </plugins>
+
+    <!-- 配置环境 指定数据库连接信息 -->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!-- 引入mapper配置文件 -->
+        <!--<mapper resource="com/laravelshao/learning/mybatis/mapper/UserMapper.xml"/>-->
+        <!-- 配置mapper接口扫描包 -->
+        <package name="com.laravelshao.learning.mybatis.mapper"/>
+    </mappers>
+
+    
+</configuration>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laravelshao.learning.mybatis.mapper.OrderMapper">
+
+    <select id="queryOrderAndUserByOrderNumber" resultType="OrderUser">
+		SELECT
+			o.*,
+			u.user_name,
+			u.name
+		FROM
+			tb_order o
+		LEFT JOIN tb_user u ON o.user_id = u.id
+		WHERE
+			o.order_number = #{orderNumber}
+	</select>
+
+    <!-- 在resultMap中，完成对象映射时，autoMapping默认为false -->
+    <resultMap type="Order" id="orderResultMap" autoMapping="true">
+        <id column="id" property="id"/>
+        <!--
+            association: 用于映射java对象
+            property：Order对象中的属性名（User对象）
+            javaType：属性的java类型（可以使用别名）
+         -->
+        <association property="user" javaType="User" autoMapping="true">
+            <!-- id：User对象的id -->
+            <id column="user_id" property="id"/>
+        </association>
+    </resultMap>
+
+    <select id="queryOrderAndUserByOrderNumber2" resultMap="orderResultMap">
+		SELECT
+			o.*,
+			u.user_name,
+			u.name
+		FROM
+			tb_order o
+		LEFT JOIN tb_user u ON o.user_id = u.id
+		WHERE
+			o.order_number = #{orderNumber}
+	</select>
+
+    <resultMap type="Order" id="orderAndUserAndOrderDetailResultMap" autoMapping="true">
+        <id column="id" property="id"/>
+        <association property="user" javaType="User" autoMapping="true">
+            <id column="user_id" property="id"/>
+        </association>
+        <!--
+            javaType: 属性的java类型
+            ofType：集合中的对象类型
+         -->
+        <collection property="orderdetails" javaType="List" ofType="Orderdetail" autoMapping="true">
+            <id column="detail_id" property="id"/>
+        </collection>
+
+    </resultMap>
+
+    <select id="queryOrderAndUserAndOrderDetailByOrderNumber" resultMap="orderAndUserAndOrderDetailResultMap">
+		SELECT
+			o.*,
+			u.user_name,
+			u.name,
+			od.item_id,
+			od.total_price,
+			od.id detail_id
+		FROM
+			tb_order o
+		LEFT JOIN tb_user u ON o.user_id = u.id
+		LEFT JOIN tb_orderdetail od ON od.order_id = o.id
+		WHERE
+			o.order_number = #{orderNumber}
+	</select>
+
+    <resultMap type="Order" id="orderAndUserAndOrderDetailAndItemResultMap" autoMapping="true"
+               extends="orderResultMap">
+
+        <!-- <id column="id" property="id"/>
+        <association property="user" javaType="User" autoMapping="true">
+            <id column="user_id" property="id"/>
+        </association> -->
+        <!--
+            javaType: 属性的javae类型
+            ofType：集合中的对象类型
+         -->
+        <collection property="orderdetails" javaType="List" ofType="Orderdetail" autoMapping="true">
+            <id column="detail_id" property="id"/>
+
+            <association property="item" javaType="Item" autoMapping="true">
+                <id column="iid" property="id"/>
+            </association>
+
+        </collection>
+    </resultMap>
+
+    <select id="queryOrderAndUserAndOrderDetailAndItemByOrderNumber" resultMap="orderAndUserAndOrderDetailAndItemResultMap">
+		SELECT
+			o.*,
+			u.user_name,
+			u.name,
+			od.item_id,
+			od.total_price,
+			od.id detail_id,
+			i.id iid,
+			i.item_name,
+			i.item_price,
+			i.item_detail
+		FROM
+			tb_order o
+		LEFT JOIN tb_user u ON o.user_id = u.id
+		LEFT JOIN tb_orderdetail od ON od.order_id = o.id
+		LEFT JOIN tb_item i ON od.item_id = i.id
+		WHERE
+			o.order_number = #{orderNumber}
+	</select>
+
+    <resultMap type="Order" id="lazyOrderResultMap" autoMapping="true">
+        <id column="id" property="id"/>
+        <!--
+            select:延迟加载时执行SQL的StatementId
+            column：指定关联的字段
+         -->
+        <association property="user" javaType="User" select="queryUserById" column="user_id"/>
+    </resultMap>
+
+    <select id="queryUserById" parameterType="Long" resultType="User">
+		SELECT * FROM tb_user WHERE id = #{id}
+	</select>
+
+    <select id="lazyQueryOrderAndUserByOrderNumber" resultMap="lazyOrderResultMap">
+		SELECT * FROM tb_order WHERE order_number = #{orderNumber}
+	</select>
+
+</mapper>

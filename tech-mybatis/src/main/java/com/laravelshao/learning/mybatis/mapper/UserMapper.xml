@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 命名空间(保持唯一) 如需mybatis生成mapper动态代理类 则必须使用mapper接口全路径 -->
+<mapper namespace="com.laravelshao.learning.mybatis.mapper.UserMapper">
+
+    <!-- 开启二级缓存 -->
+    <cache/>
+
+    <!--
+        开启FIFO类型二级缓存 每隔60秒刷新 存储结果对象或列表的512个引用
+        而且返回对象被认为是只读的 因此在不同线程中的调用者之间修改它们会导致冲突
+    -->
+    <!--<cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true"/>-->
+
+    <!--
+        id：ResultMap唯一标识
+        type：结果集映射的java对象全路径或者别名
+        autoMapping：是否自动映射没有映射关系的属性和字段 默认开启
+    -->
+    <resultMap id="userResultMap" type="User" autoMapping="true">
+        <!-- id标签映射主键字段 -->
+        <id column="id" property="id"/>
+        <!-- result标签映射非主键字段 column 字段名 property 属性名 -->
+        <result column="user_name" property="userName"/>
+    </resultMap>
+
+    <!-- 根据id查询用户信息 -->
+    <!--<select id="queryUserById" resultType="User">-->
+    <select id="queryUserById" resultMap="userResultMap">
+        SELECT * FROM tb_user WHERE id = #{id}
+    </select>
+
+    <!-- 查询所有用户数据 -->
+    <select id="queryAll" resultType="com.laravelshao.learning.mybatis.pojo.User">
+		SELECT * FROM tb_user
+	</select>
+
+    <!-- 新增用户信息 -->
+    <insert id="saveUser" parameterType="com.laravelshao.learning.mybatis.pojo.User">
+		INSERT INTO tb_user (
+			id,
+			user_name,
+			password,
+			name,
+			age,
+			sex,
+			birthday,
+			created,
+			updated
+		)
+		VALUES
+			(
+				NULL,
+				#{userName},
+				#{password},
+				#{name},
+				#{age},
+				#{sex},
+				#{birthday},
+				NOW(),
+				NOW()
+			);
+	</insert>
+
+    <!-- 更新用户信息 -->
+    <update id="updateUser" parameterType="com.laravelshao.learning.mybatis.pojo.User">
+		UPDATE tb_user
+		SET
+		  user_name = #{userName},
+		  password = #{password},
+		  name = #{name},
+		  age = #{age},
+		  sex = #{sex},
+		  birthday = #{birthday},
+		  updated = NOW()
+		WHERE
+		  id = #{id}
+	</update>
+
+    <!-- 根据id删除用户信息 -->
+    <delete id="deleteUserById" parameterType="java.lang.Long">
+		DELETE FROM tb_user WHERE id = #{id}
+	</delete>
+
+    <!-- 测试动态SQL 查询男性用户，如果输入了姓名进行模糊查找 -->
+    <select id="queryUserListLikeName" resultType="com.laravelshao.learning.mybatis.pojo.User">
+        SELECT * FROM tb_user WHERE sex = 1
+        <if test="name !=null and name != ''">
+            AND name LIKE '%${name}%'
+        </if>
+    </select>
+
+    <!-- 测试动态SQL 查询男性用户，如果输入了姓名则按照姓名模糊查找，否则如果输入了年龄则按照年龄查找 -->
+    <select id="queryUserListLikeNameORAge" resultType="com.laravelshao.learning.mybatis.pojo.User">
+        SELECT * FROM tb_user WHERE sex = 1
+        <choose>
+            <when test="name !=null and name != ''">
+                AND name LIKE '%${name}%'
+            </when>
+            <when test="age !=null and age != ''">
+                AND age &lt; 30
+            </when>
+        </choose>
+    </select>
+
+    <!-- 测试动态SQL 查询所有用户，如果输入了姓名，进行模糊查找，如果输入了年龄则按照年龄查找 -->
+    <select id="queryAllUserListLikeNameORAge" resultType="com.laravelshao.learning.mybatis.pojo.User">
+        SELECT * FROM tb_user
+        <!-- 如果后面条件都不满足则不添加where关键字 否则添加where关键字  -->
+        <where>
+            <if test="name !=null and name != ''">
+                AND name LIKE '%${name}%'
+            </if>
+            <if test="age !=null and age != ''">
+                AND age &lt; 30
+            </if>
+        </where>
+    </select>
+
+    <!-- 按照多个ID查询用户信息 -->
+    <select id="queryAllUserListByIds" resultType="com.laravelshao.learning.mybatis.pojo.User">
+        SELECT * FROM tb_user WHERE id IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+</mapper>

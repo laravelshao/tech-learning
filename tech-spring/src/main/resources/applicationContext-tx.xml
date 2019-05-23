@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- 引入外部属性文件 -->
+    <context:property-placeholder location="classpath:db.properties"/>
+
+    <!-- 配置组件扫描 -->
+    <context:component-scan base-package="com.laravelshao.learning.spring.tx"/>
+
+    <!-- 配置事务注解驱动 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 配置事务 -->
+    <!-- 配置通知advice -->
+    <!-- <bean id="txAdvice" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+        <property name="transactionAttributes">事务的属性</property>
+    </bean> -->
+    <!-- 为了简化事务的通知配置，引入了一个标签
+    tx:advice：相当于bean id="txAdvice" class="org.springframework.transaction.interceptor.TransactionInterceptor"
+    id:通知的名字
+    transaction-manager:指定具体的平台事务管理器的实现 不同的持久层方案有不同的实现 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <!-- 配置事务的具体的属性 -->
+        <tx:attributes>
+            <!-- 配置具体方法的不同的事务的属性
+            isolation:设置隔离级别，默认值default，使用数据库的默认隔离级别
+            propagation:传播行为，默认值REQUIRED，同一个事务。
+            timeout：事务（连接）的超时时间，默认值-1,使用数据库默认的超时时间
+            read-only：事务是否只读，默认值false，代表可读写
+            rollback-for:遇到某个指定的异常就回滚，其他都不回滚
+            no-rollback-for:遇到某个指定异常不会滚，其他异常都回滚 -->
+            <tx:method name="transfer" isolation="DEFAULT" propagation="REQUIRED" timeout="-1"
+                       read-only="false" rollback-for="" no-rollback-for="java.lang.ArithmeticException"/>
+            <!-- 支持通配符 可以批量配置事务属性 -->
+            <tx:method name="insert*"/>
+            <tx:method name="find*" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- 配置aop：切入点和切面 -->
+    <aop:config>
+        <!-- 切入点 -->
+        <aop:pointcut expression="bean(*Service)" id="txPointcut"/>
+        <!-- 切面 -->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+    </aop:config>
+
+    <!-- mybatis相关配置 -->
+    <!-- 配置sqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:com/laravelshao/learning/spring/tx/mapper/*.xml"/>
+    </bean>
+
+    <!-- mapper接口扫描器 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.laravelshao.learning.spring.tx.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+    </bean>
+
+    <!-- 配置druid数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
+          destroy-method="close">
+        <!-- 数据库基本信息配置 -->
+        <property name="url" value="${druid.url}"/>
+        <property name="username" value="${druid.username}"/>
+        <property name="password" value="${druid.password}"/>
+        <property name="driverClassName" value="${druid.driverClassName}"/>
+
+        <!-- 初始化连接数量 -->
+        <property name="initialSize" value="${druid.initialSize}"/>
+        <!-- 最小空闲连接数 -->
+        <property name="minIdle" value="${druid.minIdle}"/>
+        <!-- 最大并发连接数 -->
+        <property name="maxActive" value="${druid.maxActive}"/>
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="${druid.maxWait}"/>
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${druid.timeBetweenEvictionRunsMillis}"/>
+
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}"/>
+        <property name="validationQuery" value="${druid.validationQuery}"/>
+        <property name="testWhileIdle" value="${druid.testWhileIdle}"/>
+        <property name="testOnBorrow" value="${druid.testOnBorrow}"/>
+        <property name="testOnReturn" value="${druid.testOnReturn}"/>
+
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 如果用Oracle，则把poolPreparedStatements配置为true，mysql可以配置为false。 -->
+        <property name="poolPreparedStatements" value="${druid.poolPreparedStatements}"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize"
+                  value="${druid.maxPoolPreparedStatementPerConnectionSize}"/>
+
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="${druid.filters}"/>
+    </bean>
+
+</beans>

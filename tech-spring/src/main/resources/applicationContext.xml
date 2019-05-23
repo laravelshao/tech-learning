@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--开启spring注解功能-->
+    <!-- <context:annotation-config/> -->
+    <!-- 配置bean组件扫描 自动开启注解功能 自动扫描含有@Component注解的类型作为bean-->
+    <!--base-package:包名 自动扫描指定包以及子包-->
+    <context:component-scan base-package="com.laravelshao.learning.spring.di.annotation"/>
+
+
+    <!--配置对象名称和类对应关系(spring工厂通过反射机制创建对象)-->
+    <!--id/name:对象名称 用来获取对象或进行引用 class:要实例化的类的全路径-->
+    <!--dao的bean-->
+    <bean id="userDAO" class="com.laravelshao.learning.spring.ioc.UserDAOImpl" lazy-init="default"/>
+    <!--service的bean-->
+    <bean id="userService" class="com.laravelshao.learning.spring.ioc.UserServiceImpl">
+        <!--要依赖dao 主动将依赖的dao注入给service 需要提供属性对应的setter方法
+        name:setter方法对应属性名称 如果setXxx 属性名称为xxx(setUserDAO userDAO) spring会自动调用 将该对象注入进去
+        ref:bean对象的名字
+        -->
+        <property name="userDAO" ref="userDAO"/>
+    </bean>
+
+    <!--实例化bean的四种方式-->
+    <!--方式1 无参数构造方法（最常用）自动默认调用bean1的默认构造器 等同bean1=new Bean1()-->
+    <bean id="bean1" class="com.laravelshao.learning.spring.instance.Bean1"/>
+    <!--方式2 静态工厂方法 相当于Bean2Factory.getBean2() 让spring大工厂调用自己的小工厂 将对象创建权限交给小工厂-->
+    <bean id="bean2" class="com.laravelshao.learning.spring.instance.Bean2Factory" factory-method="getBean2"/>
+    <!--方式3 实例工厂方法 先实例化工厂 再调用工厂获取对象方法-->
+    <bean id="bean3Factory" class="com.laravelshao.learning.spring.instance.Bean3Factory"/>
+    <!--factory-bean自定义工厂对象-->
+    <bean id="bean3" factory-bean="bean3Factory" factory-method="getBean3"/>
+    <!--方式4 FactoryBean方式
+    spring在初始化bean时先看看是否实现了FactoryBean接口
+    如果实现了就调用getObject()方法获取bean对象 而不再调用class类型的构造器返回对象
+    -->
+    <bean id="bean4" class="com.laravelshao.learning.spring.instance.MyBean4FactoryBean"/>
+
+    <!--bean的作用域-->
+    <!--scope 配置bean的作用范围 默认值就是singleton单例-->
+    <bean id="singletonBean" class="com.laravelshao.learning.spring.scope.SingletonBean" scope="singleton"/>
+    <!--prototype 配置多例-->
+    <bean id="prototypeBean" class="com.laravelshao.learning.spring.scope.PrototypeBean" scope="prototype"/>
+
+    <!--bean的生命周期-->
+    <!--<bean id="lifecycleBean" class="com.laravelshao.learning.spring.lifecycle.LifecycleBean"-->
+    <!--init-method="init" destroy-method="destroy"/>-->
+
+    <!-- bean详情生命周期测试 -->
+    <bean id="student" class="com.laravelshao.learning.spring.lifecycle.bean.Student"/>
+    <!-- 实现InitializingBean、DisposableBean接口方式 -->
+    <!--<bean id="studentService" class="com.laravelshao.learning.spring.lifecycle.service.StudentService">-->
+    <!--<property name="student" ref="student"/>-->
+    <!--</bean>-->
+    <!-- XML配置init-method、destroy-method -->
+    <!--<bean id="myStudentService" class="com.laravelshao.learning.spring.lifecycle.service.MyStudentService"-->
+    <!--init-method="init" destroy-method="destory">-->
+    <!--<property name="student" ref="student"/>-->
+    <!--</bean>-->
+    <!-- 注解配置(PostConstruct、PreDestroy)初始化及销毁方法 -->
+    <!--<bean id="myService" class="com.laravelshao.learning.spring.lifecycle.service.MyService">-->
+    <!--<property name="student" ref="student"/>-->
+    <!--</bean>-->
+    <!-- 实现*Aware接口 -->
+    <bean id="myAwareService" class="com.laravelshao.learning.spring.lifecycle.service.MyAwareService"/>
+    <!--<bean id="myBeanPostProcessor" class="com.laravelshao.learning.spring.lifecycle.processor.MyBeanPostProcessor"/>-->
+
+    <!--属性依赖注入的两种方式-->
+    <!--方式1 构造方法注入属性值-->
+    <bean id="car" class="com.laravelshao.learning.spring.di.xml.Car">
+        <!--使用有参构造进行属性值注入
+        constructor-arg 通过构造器注入属性的值 一个标签注入一个属性值
+        属性
+        1 定位属性
+        index 参数索引位置
+        name 参数的名字
+        type 根据参数的类型
+        2 参数赋值属性
+        value 要设置的简单值
+        ref 复杂值（bean对象）
+         -->
+        <constructor-arg index="0" value="1001"></constructor-arg>
+        <constructor-arg name="name" value="阿斯顿马丁"></constructor-arg>
+        <constructor-arg type="java.lang.Double" value="9.8d"></constructor-arg>
+    </bean>
+    <!--方式2 setter方法属性注入-->
+    <bean id="person" class="com.laravelshao.learning.spring.di.xml.Person">
+        <property name="id" value="10001"/>
+        <!--name的属性值和对象里面的属性可以不一致 看的是setter方法-->
+        <property name="name" value="张三"/>
+        <property name="car" ref="car"/>
+    </bean>
+    <!--p名称空间简化setter属性注入-->
+    <bean id="person2" class="com.laravelshao.learning.spring.di.xml.Person" p:id="2222" p:name="关羽" p:car-ref="car"/>
+    <!--SpEL表达式简化setter属性注入-->
+    <bean id="person3" class="com.laravelshao.learning.spring.di.xml.Person" p:id="#{1+1}" p:name="#{car.name}"
+          p:car="#{car}"/>
+
+</beans>

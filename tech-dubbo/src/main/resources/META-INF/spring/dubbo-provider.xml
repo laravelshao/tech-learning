@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 提供方应用信息，用于跟踪依赖关系 -->
+    <dubbo:application name="dubbo-provider"/>
+
+    <!--<dubbo:registry address="N/A"/>-->
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+
+
+    <!-- 使用dubbo协议在端口20880暴露服务 -->
+    <dubbo:protocol name="dubbo" port="20880"/>
+
+    <!-- 将具体的实现类添加到spring容器中 -->
+    <bean id="helloService" class="com.laravelshao.learning.dubbo.provider.HelloServiceImpl"/>
+
+    <!-- 声明需要暴露的服务接口 -->
+    <dubbo:service interface="com.laravelshao.learning.dubbo.api.HelloService" ref="helloService"/>
+
+    <!-- 设置从注册中心获取监控中心地址，否则直连监控中心 -->
+    <!--<dubbo:monitor protocol="registry"/>-->
+
+</beans>

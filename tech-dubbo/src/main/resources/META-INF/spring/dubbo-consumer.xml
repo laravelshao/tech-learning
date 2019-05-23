@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 消费方应用信息，用于跟踪依赖关系 -->
+    <dubbo:application name="dubbo-consumer"/>
+
+    <!-- 使用zookeeper注册中心暴露发现服务地址 -->
+    <!--<dubbo:registry address="N/A"/>-->
+    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+
+    <!--<dubbo:reference id="userService" interface="com.laravelshao.dubbo.service.UserService"-->
+    <!--url="dubbo://127.0.0.1:20880/com.laravelshao.dubbo.service.UserService"/>-->
+    <!-- 从注册中心查找服务，生成远程服务代理 -->
+    <!-- check:不检查依赖服务(可避免循环依赖) cluster:配置集群容错方式(failover默认)-->
+    <dubbo:reference id="helloService" interface="com.laravelshao.learning.dubbo.api.HelloService"
+                     cluster="failover" mock="com.laravelshao.learning.dubbo.consumer.MockHelloService" timeout="1000"/>
+
+    <!-- 设置从注册中心获取监控中心地址，否则直连监控中心 -->
+    <!--<dubbo:monitor protocol="registry"/>-->
+
+</beans>

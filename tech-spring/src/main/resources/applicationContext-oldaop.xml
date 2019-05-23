@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--确定目标对象bean-->
+    <!--基于接口类-->
+    <bean id="customerService" class="com.laravelshao.learning.spring.aop.CustomerServiceImpl"></bean>
+    <!--基于一般类-->
+    <bean id="productService" class="com.laravelshao.learning.spring.aop.ProductService"></bean>
+    <!--配置通知-->
+    <bean id="timeLogAdvice" class="com.laravelshao.learning.spring.aop.old.TimeLogInterceptor"></bean>
+
+    <!--配置切入点和切面 aop:config-->
+    <aop:config>
+        <!--配置切入点-->
+        <aop:pointcut expression="bean(*Service)" id="myPointcut"/>
+        <!--配置切面 将通知关联切入点-->
+        <aop:advisor advice-ref="timeLogAdvice" pointcut-ref="myPointcut"/>
+    </aop:config>
+</beans>
