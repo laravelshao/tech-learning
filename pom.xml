@@ -15,8 +15,6 @@
         <module>tech-spi</module>
         <module>tech-design-pattern</module>
         <module>tech-spring</module>
-        <module>tech-spring-self-one</module>
-        <module>tech-spring-self-two</module>
         <module>tech-springmvc</module>
         <module>tech-kafka</module>
         <module>tech-rpc</module>
