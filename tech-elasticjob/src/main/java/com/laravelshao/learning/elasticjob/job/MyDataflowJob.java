@@ -50,7 +50,6 @@ public class MyDataflowJob implements DataflowJob<Order> {
 
         LocalTime time = LocalTime.now();
         log.info(time + " 当前分片项：{}, 当前抓取的数据是：{}", shardingContext.getShardingItem(), subList);
-        //System.out.println(time+" 当前分片项："+shardingContext.getShardingItem()+",我抓取的数据是："+subList);
         return subList;
     }
 
@@ -64,6 +63,5 @@ public class MyDataflowJob implements DataflowJob<Order> {
         }
         LocalTime time = LocalTime.now();
         log.info(time + " 当前分片项：{}, 正在处理数据......", shardingContext.getShardingItem());
-        //System.out.println(time+",我是分片项："+shardingContext.getShardingItem()+",我正在处理数据！");
     }
 }

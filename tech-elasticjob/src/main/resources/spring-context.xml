@@ -10,8 +10,13 @@
     <!-- 注册中心 -->
     <reg:zookeeper id="zkCenter" server-lists="127.0.0.1:2181" namespace="tech-elasticjob"/>
 
-    <!-- 声明simple类型任务 -->
+    <!-- 声明simple类型任务 overwrite：设置配置是否刷新-->
     <job:simple id="mySimpleJob" registry-center-ref="zkCenter" cron="0/10 * * * * ?" sharding-total-count="2"
                 class="com.laravelshao.learning.elasticjob.job.MySimpleJob" overwrite="true"/>
+
+    <!-- 声明dataflow类型任务 streaming-process：设置是否多次拉取数据，false等同于Simple任务 -->
+<!--    <job:dataflow id="myDataflowJob" registry-center-ref="zkCenter" cron="0/10 * * * * ?" sharding-total-count="2"-->
+<!--                  class="com.laravelshao.learning.elasticjob.job.MyDataflowJob" overwrite="true"-->
+<!--                  streaming-process="true"/>-->
 
 </beans>
