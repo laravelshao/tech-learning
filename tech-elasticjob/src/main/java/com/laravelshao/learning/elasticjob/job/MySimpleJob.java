@@ -16,7 +16,7 @@ public class MySimpleJob implements SimpleJob {
 
     @Override
     public void execute(ShardingContext shardingContext) {
-        log.info("当前分片为：{}", shardingContext.getShardingItem());
+        log.info("当前分片为：{}, 总分片数为：{}", shardingContext.getShardingItem(), shardingContext.getShardingTotalCount());
         //System.out.println("当前分片为："+shardingContext.getShardingItem());
     }
 
