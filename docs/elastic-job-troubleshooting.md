@@ -178,15 +178,6 @@ Caused by: java.lang.NoSuchMethodError: com.google.common.util.concurrent.MoreEx
 
 ```xml
 <dependencies>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-        <!-- spring web -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-        </dependency>
         <!-- 引入elastic-job-lite核心模块 -->
         <dependency>
             <groupId>com.dangdang</groupId>
