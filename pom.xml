@@ -25,6 +25,7 @@
         <module>tech-rabbitmq</module>
         <module>tech-dubbo</module>
         <module>tech-data-structures</module>
+        <module>tech-elasticjob</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -63,7 +64,8 @@
         <amqp-client.version>5.5.3</amqp-client.version>
         <spring-rabbit.version>1.4.0.RELEASE</spring-rabbit.version>
         <guava.version>23.0</guava.version>
-        <alipay-sdk-java.version>3.7.26.ALL</alipay-sdk-java.version>
+        <commons-collections.version>3.2.2</commons-collections.version>
+        <elastic-job.version>2.1.5</elastic-job.version>
     </properties>
 
     <dependencyManagement>
@@ -87,6 +89,12 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-expression</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <!-- spring web -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
                 <version>${spring.version}</version>
             </dependency>
             <!-- springmvc -->
@@ -224,6 +232,11 @@
                 <artifactId>commons-fileupload</artifactId>
                 <version>${commons-fileupload.version}</version>
             </dependency>
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>${commons-collections.version}</version>
+            </dependency>
             <!-- kafka client -->
             <dependency>
                 <groupId>org.apache.kafka</groupId>
@@ -306,11 +319,17 @@
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
             </dependency>
-            <!-- 支付宝SDK -->
+            <!-- 引入elastic-job-lite核心模块 -->
             <dependency>
-                <groupId>com.alipay.sdk</groupId>
-                <artifactId>alipay-sdk-java</artifactId>
-                <version>${alipay-sdk-java.version}</version>
+                <groupId>com.dangdang</groupId>
+                <artifactId>elastic-job-lite-core</artifactId>
+                <version>${elastic-job.version}</version>
+            </dependency>
+            <!-- elastic-job整合spring -->
+            <dependency>
+                <groupId>com.dangdang</groupId>
+                <artifactId>elastic-job-lite-spring</artifactId>
+                <version>${elastic-job.version}</version>
             </dependency>
 
         </dependencies>
