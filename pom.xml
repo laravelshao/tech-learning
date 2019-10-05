@@ -29,6 +29,7 @@
         <module>tech-basic</module>
         <module>tech-elasticsearch</module>
         <module>tech-utils</module>
+        <module>tech-quartz</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -70,6 +71,7 @@
         <commons-collections.version>3.2.2</commons-collections.version>
         <elastic-job.version>2.1.5</elastic-job.version>
         <commons-dbcp2.version>2.6.0</commons-dbcp2.version>
+        <quartz.version>2.3.1</quartz.version>
     </properties>
 
     <dependencyManagement>
@@ -339,6 +341,12 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-dbcp2</artifactId>
                 <version>${commons-dbcp2.version}</version>
+            </dependency>
+            <!-- quartz -->
+            <dependency>
+                <groupId>org.quartz-scheduler</groupId>
+                <artifactId>quartz</artifactId>
+                <version>${quartz.version}</version>
             </dependency>
 
         </dependencies>
