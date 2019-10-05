@@ -69,6 +69,7 @@
         <guava.version>23.0</guava.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <elastic-job.version>2.1.5</elastic-job.version>
+        <commons-dbcp2.version>2.6.0</commons-dbcp2.version>
     </properties>
 
     <dependencyManagement>
@@ -333,6 +334,11 @@
                 <groupId>com.dangdang</groupId>
                 <artifactId>elastic-job-lite-spring</artifactId>
                 <version>${elastic-job.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-dbcp2</artifactId>
+                <version>${commons-dbcp2.version}</version>
             </dependency>
 
         </dependencies>
