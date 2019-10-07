@@ -17,13 +17,13 @@ public class QuartzApiTest {
 
     public static void main(String[] args) throws SchedulerException, IOException {
 
+        // 获取调度器
         Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-        scheduler.start();
 
         // 配置JobDetail
         JobDetail jobDetail = JobBuilder.newJob(MyJob.class).withIdentity("jobDetail0", "group0").build();
 
-        // 配置Trigger
+        // 配置Trigger(SimpleScheduleBuilder/CronScheduleBuilder)
         Trigger trigger = TriggerBuilder.newTrigger().startNow()
                 .withSchedule(
                         SimpleScheduleBuilder
@@ -32,7 +32,11 @@ public class QuartzApiTest {
                                 .repeatForever())
                 .build();
 
+        // 注册任务和定时器
         scheduler.scheduleJob(jobDetail, trigger);
+
+        // 启动调度器
+        scheduler.start();
 
         // 保持服务不结束
         System.in.read();
