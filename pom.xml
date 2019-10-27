@@ -32,6 +32,7 @@
         <module>tech-quartz</module>
         <module>tech-protobuf</module>
         <module>tech-thrift</module>
+        <module>tech-grpc</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -76,6 +77,7 @@
         <quartz.version>2.3.1</quartz.version>
         <protobuf.version>3.10.0</protobuf.version>
         <thrift.version>0.12.0</thrift.version>
+        <grpc.version>1.24.0</grpc.version>
     </properties>
 
     <dependencyManagement>
@@ -368,6 +370,22 @@
                 <groupId>org.apache.thrift</groupId>
                 <artifactId>libthrift</artifactId>
                 <version>${thrift.version}</version>
+            </dependency>
+            <!-- grpc -->
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-netty-shaded</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-protobuf</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-stub</artifactId>
+                <version>${grpc.version}</version>
             </dependency>
 
         </dependencies>
