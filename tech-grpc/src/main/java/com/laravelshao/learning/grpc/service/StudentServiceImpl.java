@@ -2,11 +2,15 @@ package com.laravelshao.learning.grpc.service;
 
 import com.laravelshao.learning.grpc.proto.MyRequest;
 import com.laravelshao.learning.grpc.proto.MyResponse;
+import com.laravelshao.learning.grpc.proto.StreamRequest;
+import com.laravelshao.learning.grpc.proto.StreamResponse;
 import com.laravelshao.learning.grpc.proto.StudentRequest;
 import com.laravelshao.learning.grpc.proto.StudentResponse;
 import com.laravelshao.learning.grpc.proto.StudentResponseList;
 import com.laravelshao.learning.grpc.proto.StudentServiceGrpc;
 import io.grpc.stub.StreamObserver;
+
+import java.util.UUID;
 
 /**
  * 服务实现 继承 gRPC 生成的抽象类
@@ -18,7 +22,7 @@ import io.grpc.stub.StreamObserver;
 public class StudentServiceImpl extends StudentServiceGrpc.StudentServiceImplBase {
 
     /**
-     * 简单请求简单响应
+     * 单个请求单个响应
      *
      * @param request
      * @param responseObserver
@@ -32,7 +36,7 @@ public class StudentServiceImpl extends StudentServiceGrpc.StudentServiceImplBas
     }
 
     /**
-     * 简单请求流式响应
+     * 单个请求流式响应
      *
      * @param request
      * @param responseObserver
@@ -50,7 +54,7 @@ public class StudentServiceImpl extends StudentServiceGrpc.StudentServiceImplBas
     }
 
     /**
-     * 流式请求简单响应
+     * 流式请求单个响应
      *
      * @param responseObserver
      * @return
@@ -77,6 +81,33 @@ public class StudentServiceImpl extends StudentServiceGrpc.StudentServiceImplBas
                         .addStudentResponse(studentResponse).addStudentResponse(studentResponse2).build();
 
                 responseObserver.onNext(studentResponseList);
+                responseObserver.onCompleted();
+            }
+        };
+    }
+
+    /**
+     * 流式请求流式响应
+     *
+     * @param responseObserver
+     * @return
+     */
+    @Override
+    public StreamObserver<StreamRequest> biTalk(StreamObserver<StreamResponse> responseObserver) {
+        return new StreamObserver<StreamRequest>() {
+            @Override
+            public void onNext(StreamRequest streamRequest) {
+                System.out.println(streamRequest.getRequestInfo());
+                responseObserver.onNext(StreamResponse.newBuilder().setResponseInfo(UUID.randomUUID().toString()).build());
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                System.out.println(throwable.getMessage());
+            }
+
+            @Override
+            public void onCompleted() {
                 responseObserver.onCompleted();
             }
         };
