@@ -4,6 +4,7 @@ import com.laravelshao.learning.grpc.proto.MyRequest;
 import com.laravelshao.learning.grpc.proto.MyResponse;
 import com.laravelshao.learning.grpc.proto.StudentRequest;
 import com.laravelshao.learning.grpc.proto.StudentResponse;
+import com.laravelshao.learning.grpc.proto.StudentResponseList;
 import com.laravelshao.learning.grpc.proto.StudentServiceGrpc;
 import io.grpc.stub.StreamObserver;
 
@@ -46,5 +47,38 @@ public class StudentServiceImpl extends StudentServiceGrpc.StudentServiceImplBas
         responseObserver.onNext(StudentResponse.newBuilder().setName("赵六").setAge(50).setCity("盐城").build());
 
         responseObserver.onCompleted();
+    }
+
+    /**
+     * 流式请求简单响应
+     *
+     * @param responseObserver
+     * @return
+     */
+    @Override
+    public StreamObserver<StudentRequest> getStudentsWrapperByAges(StreamObserver<StudentResponseList> responseObserver) {
+        return new StreamObserver<StudentRequest>() {
+            @Override
+            public void onNext(StudentRequest studentRequest) {
+                System.out.println("onNext: " + studentRequest.getAge());
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                System.out.println(throwable.getMessage());
+            }
+
+            @Override
+            public void onCompleted() {
+
+                StudentResponse studentResponse = StudentResponse.newBuilder().setName("张三").setAge(20).setCity("上海").build();
+                StudentResponse studentResponse2 = StudentResponse.newBuilder().setName("李四").setAge(30).setCity("北京").build();
+                StudentResponseList studentResponseList = StudentResponseList.newBuilder()
+                        .addStudentResponse(studentResponse).addStudentResponse(studentResponse2).build();
+
+                responseObserver.onNext(studentResponseList);
+                responseObserver.onCompleted();
+            }
+        };
     }
 }
