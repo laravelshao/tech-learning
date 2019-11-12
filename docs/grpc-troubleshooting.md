@@ -51,7 +51,7 @@ within generateProtoTasks block (see previous section). E.g.,
 
 ### 3. node npm 安装 grpc-tools 失败处理
 
-参考[Node gRPC 静态代码生成](https://github.com/grpc/grpc/tree/master/examples/node/static_codegen)
+参考 [Node gRPC 静态代码生成](https://github.com/grpc/grpc/tree/master/examples/node/static_codegen) 文档
 
 执行命令 `npm install -g grpc-tools` 或 `sudo npm install -g grpc-tools` 都报以下错误
 
