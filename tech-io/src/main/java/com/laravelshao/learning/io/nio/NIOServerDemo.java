@@ -16,7 +16,7 @@ import java.util.Set;
  * @date 2018/12/22
  * @description 非阻塞IO服务端
  */
-public class NIOServer {
+public class NIOServerDemo {
 
     /**
      * 监听端口
