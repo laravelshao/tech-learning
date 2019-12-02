@@ -5,16 +5,16 @@ package com.laravelshao.learning.utils.utils.tuple;
  *
  * @author qinghua.shao
  * @date 2019/8/9
- * @since 1.2.1
+ * @since 1.0.0
  */
 public class Tuple3<A, B, C> {
-    public final A a;
-    public final B b;
-    public final C c;
+    public final A first;
+    public final B second;
+    public final C third;
 
-    public Tuple3(A a, B b, C c) {
-        this.a = a;
-        this.b = b;
-        this.c = c;
+    public Tuple3(A first, B second, C third) {
+        this.first = first;
+        this.second = second;
+        this.third = third;
     }
 }
