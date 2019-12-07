@@ -15,6 +15,8 @@ import java.nio.channels.SocketChannel;
  * @author qinghua.shao
  * @date 2019/12/7
  * @since 1.0.0
+ * @see <a href="https://developer.ibm.com/articles/j-zerocopy">Efficient data transfer through zero copy</a>
+ * @see <a href="https://www.cnblogs.com/tuowang/p/9398876.html">Linux 如何减少IO过程中的CPU copy</a>
  */
 public class NewIOClient {
 
