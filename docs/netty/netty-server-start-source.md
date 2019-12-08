@@ -276,7 +276,7 @@ public T newChannel() {
 
 调用 `NioServerSocketChannel` 默认无参构造创建对象。 
 
-![创建Channel对象过程](images/channel-instantiate.jpeg)
+![创建Channel对象过程](./images/channel-instantiate.jpeg)
 
 ```java
 // NioServerSocketChannel
