@@ -1,4 +1,4 @@
-package com.laravelshao.learning.utils.collections;
+package com.laravelshao.learning.utils.practice.collections;
 
 import org.apache.commons.collections.ListUtils;
 

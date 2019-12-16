@@ -1,4 +1,4 @@
-package com.laravelshao.learning.utils.string;
+package com.laravelshao.learning.utils.practice.string;
 
 import org.apache.commons.lang3.StringUtils;
 

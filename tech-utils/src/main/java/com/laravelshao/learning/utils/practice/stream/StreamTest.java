@@ -1,17 +1,12 @@
-package com.laravelshao.learning.utils.stream;
+package com.laravelshao.learning.utils.practice.stream;
 
 import com.google.common.collect.Lists;
 import com.laravelshao.learning.utils.model.Coupon;
-import com.laravelshao.learning.utils.utils.DateUtil;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import static com.laravelshao.learning.utils.utils.DateUtil.YYYYMMDDHHMMSS;
 
 /**
  * Stream
