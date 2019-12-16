@@ -79,6 +79,7 @@
         <thrift.version>0.12.0</thrift.version>
         <grpc.version>1.24.0</grpc.version>
         <easyexcel.version>2.1.2</easyexcel.version>
+        <jackson-annotations.version>2.9.0</jackson-annotations.version>
     </properties>
 
     <dependencyManagement>
@@ -392,6 +393,11 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
                 <version>${easyexcel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson-annotations.version}</version>
             </dependency>
 
         </dependencies>
