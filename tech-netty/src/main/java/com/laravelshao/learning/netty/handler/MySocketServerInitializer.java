@@ -17,8 +17,11 @@ public class MySocketServerInitializer extends ChannelInitializer<SocketChannel>
     protected void initChannel(SocketChannel socketChannel) throws Exception {
 
         ChannelPipeline pipeline = socketChannel.pipeline();
+        pipeline.addLast(new MyByteToLongReplayingDecoder());
+        // 自定义Long转String解码器
+        pipeline.addLast(new MyLongToStringDecoder());
+        //pipeline.addLast(new MyByteToLongDecoder());
         pipeline.addLast(new MyLongToByteEncoder());
-        pipeline.addLast(new MyByteToLongDecoder());
         pipeline.addLast(new MySocketServerHandler());
     }
 }

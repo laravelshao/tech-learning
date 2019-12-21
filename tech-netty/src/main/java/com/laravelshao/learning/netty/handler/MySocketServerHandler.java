@@ -10,10 +10,10 @@ import io.netty.channel.SimpleChannelInboundHandler;
  * @date 2019/10/20
  * @since 1.0.0
  */
-public class MySocketServerHandler extends SimpleChannelInboundHandler<Long> {
+public class MySocketServerHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Long msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, String msg) throws Exception {
 
         System.out.println(channelHandlerContext.channel().remoteAddress() + " : " + msg);
         channelHandlerContext.writeAndFlush(654321L);
