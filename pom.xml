@@ -33,6 +33,7 @@
         <module>tech-protobuf</module>
         <module>tech-thrift</module>
         <module>tech-grpc</module>
+        <module>tech-postgresql</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -80,6 +81,7 @@
         <grpc.version>1.24.0</grpc.version>
         <easyexcel.version>2.1.2</easyexcel.version>
         <jackson-annotations.version>2.9.0</jackson-annotations.version>
+        <postgresql.version>42.2.7</postgresql.version>
     </properties>
 
     <dependencyManagement>
@@ -398,6 +400,12 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
                 <version>${jackson-annotations.version}</version>
+            </dependency>
+            <!-- postgresql -->
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
             </dependency>
 
         </dependencies>
