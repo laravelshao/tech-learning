@@ -34,6 +34,7 @@
         <module>tech-thrift</module>
         <module>tech-grpc</module>
         <module>tech-postgresql</module>
+        <module>tech-mongodb</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -82,6 +83,7 @@
         <easyexcel.version>2.1.2</easyexcel.version>
         <jackson-annotations.version>2.9.0</jackson-annotations.version>
         <postgresql.version>42.2.7</postgresql.version>
+        <mongodb.version>3.12.0</mongodb.version>
     </properties>
 
     <dependencyManagement>
@@ -406,6 +408,12 @@
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.version}</version>
+            </dependency>
+            <!-- mongodb -->
+            <dependency>
+                <groupId>org.mongodb</groupId>
+                <artifactId>mongodb-driver-sync</artifactId>
+                <version>${mongodb.version}</version>
             </dependency>
 
         </dependencies>
