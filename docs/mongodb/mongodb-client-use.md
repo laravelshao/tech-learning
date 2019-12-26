@@ -286,3 +286,40 @@ IndexOptions partialFilterIndexOptions = new IndexOptions()
         .partialFilterExpression(Filters.exists("contact.email"));
 activity.createIndex(Indexes.descending("activityType", "activityId"), partialFilterIndexOptions);
 ```
+
+## 5. 聚合
+
+### 5.1 聚合操作
+
+-  利用 `Aggregates` 辅助工具类
+
+```java
+// 首先筛选中categories中包含Bakery，然后根据stars分组聚合统计数量
+restaurants.aggregate(
+        Arrays.asList(
+                Aggregates.match(Filters.eq("categories", "Bakery")),
+                Aggregates.group("$stars", Accumulators.sum("count", 1))
+        )
+).forEach((Consumer<Document>) (doc) -> System.out.println(doc.toJson()));
+```
+
+- 手动构建表达式文档
+
+```java
+// 只筛选中name、categories的第一个元素
+restaurants.aggregate(
+        Arrays.asList(
+                Aggregates.project(
+                        Projections.fields(
+                                Projections.excludeId(),
+                                Projections.include("name"),
+                                Projections.computed(
+                                        "firstCategory",
+                                        new Document("$arrayElemAt", Arrays.asList("$categories", 0))
+                                )
+                        )
+                )
+        )
+).forEach((Consumer<Document>) (doc) -> System.out.println(doc.toJson()));
+```
+
