@@ -35,6 +35,7 @@
         <module>tech-grpc</module>
         <module>tech-postgresql</module>
         <module>tech-mongodb</module>
+        <module>tech-reactor</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -84,6 +85,7 @@
         <jackson-annotations.version>2.9.0</jackson-annotations.version>
         <postgresql.version>42.2.7</postgresql.version>
         <mongodb.version>3.12.0</mongodb.version>
+        <reactor-bom.version>Dysprosium-RELEASE</reactor-bom.version>
     </properties>
 
     <dependencyManagement>
@@ -414,6 +416,14 @@
                 <groupId>org.mongodb</groupId>
                 <artifactId>mongodb-driver-sync</artifactId>
                 <version>${mongodb.version}</version>
+            </dependency>
+            <!-- reactor -->
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-bom</artifactId>
+                <version>${reactor-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
         </dependencies>
