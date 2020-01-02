@@ -21,6 +21,7 @@ public class BIOServer {
 
         // 启动服务端
         ServerSocket server = new ServerSocket(port);
+        //server.setSoTimeout(1000); // 通过设置超时时间可以使服务端变成非阻塞
         System.out.println("BIO服务启动，监听端口:" + port);
 
         // 死循环监听服务
