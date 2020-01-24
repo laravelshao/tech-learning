@@ -36,6 +36,7 @@
         <module>tech-postgresql</module>
         <module>tech-mongodb</module>
         <module>tech-reactor</module>
+        <module>tech-rxjava</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -86,6 +87,7 @@
         <postgresql.version>42.2.7</postgresql.version>
         <mongodb.version>3.12.0</mongodb.version>
         <reactor-bom.version>Dysprosium-RELEASE</reactor-bom.version>
+        <rxjava.version>2.2.17</rxjava.version>
     </properties>
 
     <dependencyManagement>
@@ -424,6 +426,11 @@
                 <version>${reactor-bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.reactivex.rxjava2</groupId>
+                <artifactId>rxjava</artifactId>
+                <version>${rxjava.version}</version>
             </dependency>
 
         </dependencies>
