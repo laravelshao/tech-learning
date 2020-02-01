@@ -1,6 +1,5 @@
 package com.laravelshao.learning.concurrent.atomic;
 
-import sun.misc.Unsafe;
 
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 
@@ -23,22 +22,33 @@ public class AtomicIntegerFieldUpdaterTest {
 
     public static void main(String[] args) {
 
-        // 常规赋值更新(存在非原子更新问题)
-        //Person person = new Person();
-        //for (int i = 0; i < 10; i++) {
-        //    Thread thread = new Thread(() -> {
-        //        try {
-        //            Thread.sleep(20L);
-        //        } catch (InterruptedException e) {
-        //            e.printStackTrace();
-        //        }
-        //        System.out.println(person.age++);
-        //    });
-        //
-        //    thread.start();
-        //}
+        //normalUpdaterTest();
+        AtomicUpdaterTest();
+    }
 
-        // 原子更新(需要满足字段volatile修饰)
+    /**
+     * 常规赋值更新(存在非原子更新问题)
+     */
+    public static void normalUpdaterTest() {
+        Person person = new Person();
+        for (int i = 0; i < 10; i++) {
+            Thread thread = new Thread(() -> {
+                try {
+                    Thread.sleep(20L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(person.age++);
+            });
+
+            thread.start();
+        }
+    }
+
+    /**
+     * 原子更新(需要满足字段volatile修饰)
+     */
+    public static void AtomicUpdaterTest() {
         Person person2 = new Person();
         AtomicIntegerFieldUpdater<Person> atomicIntegerFieldUpdater = AtomicIntegerFieldUpdater.newUpdater(Person.class, "age");
 
@@ -55,8 +65,12 @@ public class AtomicIntegerFieldUpdaterTest {
             thread.start();
         }
     }
+
+    static public class Person {
+
+        // 必须是volatile、int基本类型变量
+        volatile int age = 1;
+    }
 }
 
-class Person {
-    volatile int age = 1;
-}
+
