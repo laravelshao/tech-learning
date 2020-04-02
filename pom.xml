@@ -55,7 +55,7 @@
         <druid.version>1.0.29</druid.version>
         <slf4j-api.version>1.7.25</slf4j-api.version>
         <slf4j-log4j12.version>1.7.9</slf4j-log4j12.version>
-        <lombok.version>1.16.16</lombok.version>
+        <lombok.version>1.18.12</lombok.version>
         <jstl.version>1.2</jstl.version>
         <servlet-api.version>2.5</servlet-api.version>
         <jsp-api.version>2.0</jsp-api.version>
