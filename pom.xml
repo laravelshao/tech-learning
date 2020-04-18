@@ -37,6 +37,7 @@
         <module>tech-mongodb</module>
         <module>tech-reactor</module>
         <module>tech-rxjava</module>
+        <module>tech-qlexpress</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -88,6 +89,7 @@
         <mongodb.version>3.12.0</mongodb.version>
         <reactor-bom.version>Dysprosium-RELEASE</reactor-bom.version>
         <rxjava.version>2.2.17</rxjava.version>
+        <QLExpress.version>3.2.4</QLExpress.version>
     </properties>
 
     <dependencyManagement>
@@ -431,6 +433,13 @@
                 <groupId>io.reactivex.rxjava2</groupId>
                 <artifactId>rxjava</artifactId>
                 <version>${rxjava.version}</version>
+            </dependency>
+
+            <!-- 规则引擎 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>QLExpress</artifactId>
+                <version>${QLExpress.version}</version>
             </dependency>
 
         </dependencies>
