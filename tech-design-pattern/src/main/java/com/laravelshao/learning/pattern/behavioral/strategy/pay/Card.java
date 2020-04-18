@@ -1,9 +1,8 @@
-package com.laravelshao.learning.pattern.strategy.pay;
+package com.laravelshao.learning.pattern.behavioral.strategy.pay;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author shaoqinghua

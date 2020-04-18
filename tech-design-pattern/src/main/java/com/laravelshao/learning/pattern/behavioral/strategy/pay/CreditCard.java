@@ -1,4 +1,4 @@
-package com.laravelshao.learning.pattern.strategy.pay;
+package com.laravelshao.learning.pattern.behavioral.strategy.pay;
 
 import org.springframework.stereotype.Service;
 

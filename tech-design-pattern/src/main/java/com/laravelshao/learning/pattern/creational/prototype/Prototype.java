@@ -1,12 +1,11 @@
-package com.laravelshao.learning.pattern.prototype;
-
-import java.util.ArrayList;
+package com.laravelshao.learning.pattern.creational.prototype;
 
 /**
- * Created by shaoqinghua on 2018/8/5.
+ * @author qinghua.shao
+ * @date 2018/8/5
+ * @since 1.0.0
  */
-
-class Prototype implements Cloneable {
+public class Prototype implements Cloneable {
 
     //private ArrayList list = new ArrayList();
 

@@ -1,8 +1,11 @@
-package com.laravelshao.learning.pattern.prototype;
+package com.laravelshao.learning.pattern.creational.prototype;
 
 /**
  * 原型模式
- * Created by shaoqinghua on 2018/8/5.
+ *
+ * @author qinghua.shao
+ * @date 2018/8/5
+ * @since 1.0.0
  */
 public class PrototypeTest {
 

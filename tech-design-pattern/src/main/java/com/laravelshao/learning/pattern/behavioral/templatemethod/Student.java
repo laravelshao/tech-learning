@@ -1,9 +1,16 @@
-package com.laravelshao.learning.pattern.template;
+package com.laravelshao.learning.pattern.behavioral.templatemethod;
 
 /**
- * Created by shaoqinghua on 2018/8/6.
+ * @author qinghua.shao
+ * @date 2018/8/6
+ * @since 1.0.0
  */
 public class Student extends AbstractPerson {
+
+    @Override
+    public void prepareGotoSchool() {
+        super.prepareGotoSchool();
+    }
 
     @Override
     protected void dressUp() {
