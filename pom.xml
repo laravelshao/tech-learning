@@ -26,7 +26,7 @@
         <module>tech-dubbo</module>
         <module>tech-data-structures</module>
         <module>tech-elasticjob</module>
-        <module>tech-basic</module>
+        <module>tech-jdk</module>
         <module>tech-elasticsearch</module>
         <module>tech-utils</module>
         <module>tech-quartz</module>
