@@ -1,4 +1,4 @@
-package com.laravelshao.learning.basic;
+package com.laravelshao.learning.jdk;
 
 import org.apache.commons.lang3.StringUtils;
 

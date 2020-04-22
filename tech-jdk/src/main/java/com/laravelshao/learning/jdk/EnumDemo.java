@@ -1,4 +1,4 @@
-package com.laravelshao.learning.basic;
+package com.laravelshao.learning.jdk;
 
 /**
  * 枚举说明：
