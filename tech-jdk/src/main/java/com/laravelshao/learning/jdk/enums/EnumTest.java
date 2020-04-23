@@ -1,4 +1,4 @@
-package com.laravelshao.learning.jdk;
+package com.laravelshao.learning.jdk.enums;
 
 /**
  * 枚举说明：
@@ -12,7 +12,7 @@ package com.laravelshao.learning.jdk;
  * @date 2017/8/25
  * @since 1.0.0
  */
-public class EnumDemo {
+public class EnumTest {
 
     public static void main(String[] args) {
         PriceHandleTypeEnum priceHandleTypeEnum = PriceHandleTypeEnum.byCode("1");

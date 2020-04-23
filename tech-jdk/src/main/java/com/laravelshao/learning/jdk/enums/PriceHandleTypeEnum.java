@@ -1,4 +1,4 @@
-package com.laravelshao.learning.jdk;
+package com.laravelshao.learning.jdk.enums;
 
 import org.apache.commons.lang3.StringUtils;
 

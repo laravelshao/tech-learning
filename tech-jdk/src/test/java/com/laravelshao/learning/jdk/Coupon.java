@@ -1,4 +1,4 @@
-package com.laravelshao.learning.utils.model;
+package com.laravelshao.learning.jdk;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

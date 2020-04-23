@@ -1,7 +1,7 @@
-package com.laravelshao.learning.utils.practice.stream;
+package com.laravelshao.learning.jdk;
 
 import com.google.common.collect.Lists;
-import com.laravelshao.learning.utils.model.Coupon;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -18,22 +18,11 @@ import java.util.stream.Collectors;
  */
 public class StreamTest {
 
-    public static void main(String[] args) {
-
-        // List中对象多属性拼接作为key
-        //list2Map();
-
-        // 排序
-        //sorted();
-
-        // 过滤指定条件数据
-        filter();
-    }
-
     /**
-     * List => Map
+     * List => Map(List中对象多属性拼接作为key)
      */
-    public static void list2Map() {
+    @Test
+    public void list2Map() {
 
         List<Coupon> couponList = Lists.newArrayList();
         couponList.add(new Coupon(1, "100001"));
@@ -48,7 +37,8 @@ public class StreamTest {
     /**
      * 排序
      */
-    public static void sorted() {
+    @Test
+    public void sorted() {
 
         List<Coupon> couponList = Lists.newArrayList();
         couponList.add(new Coupon(10, "100001"));
@@ -63,7 +53,8 @@ public class StreamTest {
     /**
      * 过滤指定条件数据
      */
-    public static void filter() {
+    @Test
+    public void filter() {
         List<Integer> list = Arrays.asList(1, 123, 12, 18, 23, 19);
 
         // 过滤指定条件数据
