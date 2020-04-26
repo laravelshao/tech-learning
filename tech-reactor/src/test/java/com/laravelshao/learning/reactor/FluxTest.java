@@ -7,10 +7,13 @@ import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 /**
  * Flux 测试
@@ -262,6 +265,63 @@ public class FluxTest {
         }
         int letterIndexAscii = 'A' + letterNumber - 1;
         return "" + (char) letterIndexAscii;
+    }
+
+    /**
+     * compose
+     */
+    @Test
+    public void compose() {
+        Function<Flux<String>, Flux<String>> filterAndMap =
+                f -> f.filter(color -> !color.equals("orange"))
+                        .map(String::toUpperCase);
+
+        Flux.fromIterable(Arrays.asList("blue", "green", "orange", "purple"))
+                .doOnNext(System.out::println)
+                .transform(filterAndMap)
+                .subscribe(d -> System.out.println("Subscribe to Transformed MapAndFilter: " + d));
+    }
+
+    /**
+     * buffer
+     */
+    @Test
+    public void buffer() {
+        Flux.range(1, 100).buffer(20).subscribe(System.out::println);
+        System.out.println("=======================");
+
+        Flux.range(1, 10).bufferUntil(i -> i % 2 == 0).subscribe(System.out::println);
+        System.out.println("=======================");
+
+        Flux.range(1, 10).bufferWhile(i -> i % 2 == 0).subscribe(System.out::println);
+        System.out.println("=======================");
+
+        Flux.interval(Duration.ofSeconds(1))
+                .buffer(Duration.ofSeconds(4))
+                .take(2)
+                .toStream()
+                .forEach(System.out::println);
+    }
+
+    /**
+     * window
+     */
+    @Test
+    public void window() {
+        Flux.range(1, 40).window(20).subscribe(System.out::println);
+        System.out.println("=======================");
+
+        Flux.range(1, 40).windowUntil(i -> i % 2 == 0).subscribe(System.out::println);
+        System.out.println("=======================");
+
+        Flux.range(1, 40).windowWhile(i -> i % 2 == 0).subscribe(System.out::println);
+        System.out.println("=======================");
+
+        Stream<Flux<Long>> fluxStream = Flux.interval(Duration.ofSeconds(1))
+                .window(Duration.ofSeconds(4))
+                .take(2)
+                .toStream();
+        fluxStream.forEach(x -> x.toStream().forEach(System.out::println));
     }
 
 }
