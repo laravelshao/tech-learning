@@ -174,6 +174,19 @@ public class FluxTest {
      */
     @Test
     public void create() {
+        Flux.create(sink -> {
+            for (int i = 0; i < 10; i++) {
+                sink.next(i);
+            }
+            sink.complete();
+        }).subscribe(System.out::println);
+    }
+
+    /**
+     * create
+     */
+    @Test
+    public void create2() {
         //Flux<String> bridge = Flux.create(sink -> {
         //    myEventProcessor.register(
         //            new MyEventListener<String>() {
