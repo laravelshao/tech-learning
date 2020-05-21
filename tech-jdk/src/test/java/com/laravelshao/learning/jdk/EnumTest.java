@@ -19,7 +19,11 @@ public class EnumTest {
 
     @Test
     public void enumTest() {
-        PriceHandleTypeEnum priceHandleTypeEnum = PriceHandleTypeEnum.byCode("1");
+        PriceHandleTypeEnum priceHandleTypeEnum = PriceHandleTypeEnum.byCode(1);
+        PriceHandleTypeEnum priceHandleTypeEnum2 = PriceHandleTypeEnum.byCode(2);
+        PriceHandleTypeEnum priceHandleTypeEnum3 = PriceHandleTypeEnum.byCode(3);
         System.out.println(priceHandleTypeEnum.getValue());
+        System.out.println(priceHandleTypeEnum2.getValue());
+        System.out.println(priceHandleTypeEnum3.getValue());
     }
 }

@@ -41,7 +41,7 @@ public class SupplierTest {
         Stream<Integer> stream = Stream.of(1, 2, 3, 4, 5);
         Optional<Integer> first = stream.filter(i -> i > 4).findFirst();
 
-        // orElse，如果first中存在数，就返回这个数，如果不存在，就放回传入的数
+        // orElse，如果first中存在数，就返回这个数，如果不存在，就返回传入的数
         System.out.println(first.orElse(1));
         System.out.println(first.orElse(7));
         System.out.println("====================");
