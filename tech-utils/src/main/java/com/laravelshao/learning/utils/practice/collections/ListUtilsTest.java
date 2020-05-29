@@ -13,13 +13,13 @@ import java.util.List;
 public class ListUtilsTest {
 
     public static void main(String[] args) {
-        List origin = Arrays.asList(new String[]{"1","2","3","4"});
-        List list2 = Arrays.asList(new String[]{"1","3"});
+        List origin = Arrays.asList(new String[]{"1", "2", "3", "4"});
+        List list2 = Arrays.asList(new String[]{"1", "3"});
 
         // 移除指定集合元素
-        System.out.println(ListUtils.removeAll(origin,list2));
+        System.out.println(ListUtils.removeAll(origin, list2));
         // 交集
-        System.out.println(ListUtils.retainAll(origin,list2));
+        System.out.println(ListUtils.retainAll(origin, list2));
     }
 
 }
