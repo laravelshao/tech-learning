@@ -30,6 +30,29 @@
 
 ![IO流的连接](./imgs/io-stream-chain.jpg)
 
+
+装饰类
+```java
+public class FilterInputStream extends InputStream {
+  	
+    protected volatile InputStream in;
+
+    protected FilterInputStream(InputStream in) {
+        this.in = in;
+    }
+
+    public int read() throws IOException {
+        return in.read();
+    }
+}
+```
+
+具体装饰类
+
+```java
+public class BufferedInputStream extends FilterInputStream {}
+```
+
 ## 行为型模式(behavioral)
 
 
