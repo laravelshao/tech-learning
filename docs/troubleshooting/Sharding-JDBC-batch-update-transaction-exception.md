@@ -1,4 +1,4 @@
-### 异常问题
+## 异常问题
 
 最近线上环境有一个服务频繁出现更新异常，提示不能提交JDBC事务，但是事务并没有回滚。
 
@@ -82,12 +82,12 @@ at org.springframework.jdbc.datasource.DataSourceTransactionManager.doCommit(Dat
 
 上述报错由 `sharding-jdbc` 抛出，`sharding-jdbc` commit 异常，但是 `mysql` 的事务已经提交成功，查看完整的变更记录，发现线上更新操作存在大量这种场景，而新增场景没有发现一次该异常。
 
-### 排除步骤
+## 排除步骤
 
 1. 将线上存在异常的数据导入至dev开发环境，模拟实际的操作流程，没有发现问题，可正常执行并正确响应。
 2. 在更新事务方法中手动添加异常，再次执行更新操作可正常回滚事务。
 
-3. 在CAT上查看异常发生时间点，然后到 `Kibana` 上查看 `k8slog` ，发现存在 `TransactionSystemException` 异常时，k8s上都存在 `jdbc` 的 `CommunicationsException`。怀疑是不是数据源配置有问题，项目中使用 `Druid` 作为数据库连接池。
+3. 在CAT上查看异常发生时间点，然后到 `Kibana` 上查看 `k8slog` ，发现存在 `TransactionSystemException` 异常时，k8s上都存在 `jdbc` 的 `CommunicationsException`。怀疑是不是数据源配置有问题，项目中使用 `Druid` 作为数据库连接池。
 
 > com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 7,501,223 milliseconds ago. The last packet sent successfully to the server was 7,501,224 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
 
@@ -166,7 +166,7 @@ Actual SQL: ds_1 ::: update stock_change_detail_023
 
 7. 因为该操作是B端后台操作，性能要求不高，将批量更新语句修改成循环单条执行。
 
-### 参考资料
+## 参考资料
 
 - Sharding-JDBC version 3.0.0.M1 releases features：support batch INSERT (https://github.com/apache/shardingsphere/releases?after=4.0.0)
 - Sharding-JDBC version 3.0.0.M1 support batch INSERT issues(https://github.com/apache/shardingsphere/issues/290)
