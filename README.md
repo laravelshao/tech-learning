@@ -1,6 +1,9 @@
 # tech-learning
 JDK/源码/框架/设计模式学习记录
 
+### Troubleshooting
+- [Sharding-JDBC 批量更新事务异常](./docs/troubleshooting/Sharding-JDBC batch update transaction exception.md)
+- [跨域 CORS 图片上传异常](docs/troubleshooting/CORS%20image%20upload%20exception.md)
 
 ### 设计模式
 - [设计模式分析](./docs/design-pattern/design-pattern.md)
