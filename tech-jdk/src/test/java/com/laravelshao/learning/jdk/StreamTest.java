@@ -79,6 +79,24 @@ public class StreamTest {
     }
 
     /**
+     * 分组
+     */
+    @Test
+    public void groupingBy() {
+
+        List<Coupon> couponList = Lists.newArrayList();
+        couponList.add(new Coupon(10, "100001"));
+        couponList.add(new Coupon(31, "200001"));
+        couponList.add(new Coupon(17, "300001"));
+        couponList.add(new Coupon(17, "300002"));
+
+        // 按照券来源分组
+        Map<Integer, List<Coupon>> sourceCouponMap = couponList.stream().collect(Collectors.groupingBy(Coupon::getSourceType));
+
+        System.out.println(sourceCouponMap);
+    }
+
+    /**
      * 累加
      */
     @Test
