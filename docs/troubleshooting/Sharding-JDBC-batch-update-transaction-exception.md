@@ -121,8 +121,7 @@ jdbc.share.poolPreparedStatements = false
 jdbc.share.maxPoolPreparedStatementPerConnectionSize = 20
 ```
 
-5. 偶然了解到 `sharding-jdbc` 在3.0版本之前不支持 `batch insert`，查阅了 `sharding-jdbc` release 中的新功能记录 (https://github.com/apache/shardingsphere/releases?after=4.0.0)， 
-在3.0.0.M1版本中支持了批量添加功能 Support batch INSERT (https://github.com/sharding-sphere/sharding-sphere/issues/290)， 支持类似的批量插入sql语句。
+5. 偶然了解到 `sharding-jdbc` 在3.0版本之前不支持 `batch insert`，查阅了 `sharding-jdbc` release 中的新功能记录(https://github.com/apache/shardingsphere/releases?after=4.0.0)， 在3.0.0.M1版本中支持了批量添加功能 [Support batch INSERT](https://github.com/sharding-sphere/sharding-sphere/issues/290)，支持类似的批量插入sql语句。
 
 ```sql
 INSERT INTO t_table (xx, xx) VALUES
