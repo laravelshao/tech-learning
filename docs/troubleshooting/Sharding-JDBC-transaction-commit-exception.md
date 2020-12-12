@@ -165,7 +165,7 @@ Actual SQL: ds_1 ::: update stock_change_detail_023
 而项目中也存在一个通过 `foreach` 批量更新的方法。
 
 7. 因为该操作是B端后台操作，性能要求不高，将批量更新语句修改成循环单条执行。之后几天再持续监控，发现更新异常明显减少，但是零星还有几次异常，怀疑还有其它原因导致。
-8. 考虑到目前碰到的场景为使用的数据库连接为无效连接，回归到第3点当该异常出现时，k8slog同时会存在异常信息( `CommunicationsException` )，提示信息上次成功接收到包是在7501223毫秒(超过两个小时)，也就是该连接长时间没有被用过。考虑到B端及C端查询场景频率，不太应该出现两个小时都没使用，但是该项目中还有一个全局库，里面只要一个表，就是配置全局规则层级id的起始值和步长，目前步长配置为50，一次生成50个id，另外目前该应用上线后，一个小时的活动创建量很有限(3、5次)，而一个活动的规则层级基本在1-5层，50个规则层级id可用几个小时，符合长时间不调用的现象。
+8. 考虑到目前碰到的场景为使用的数据库连接为无效连接，回归到第3点当该异常出现时，k8slog同时会存在异常信息( `CommunicationsException` )，提示信息上次成功接收到包是在7501223毫秒(超过两个小时)，也就是该连接长时间没有被用过。考虑到B端及C端查询场景频率，不太应该出现两个小时都没使用，但是该项目中还有一个全局库，里面只要一个表，就是配置全局规则层级id的起始值和步长，目前步长配置为50，一次生成50个id，另外目前该应用上线后，一个小时的活动创建量很有限(3、5次)，而一个活动的规则层级基本在1-5层，50个规则层级id可用几个小时，符合长时间不调用的现象。
 
 > com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was `7,501,223` milliseconds ago. The last packet sent successfully to the server was 7,501,224 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
 
@@ -174,10 +174,10 @@ Actual SQL: ds_1 ::: update stock_change_detail_023
 ```
 SHOW VARIABLES LIKE '%timeout%';
 interactive_timeout	3600 ## MySQL服务器关闭交互式连接前等待的秒数
-wait_timeout	3600 			 ## MySQL服务器关闭非交互连接之前等待的秒数
+wait_timeout	3600       ## MySQL服务器关闭非交互连接之前等待的秒数
 ```
 
-10. 查看应用全局库数据源配置，最小空闲连接数( `minIdle` )为5，最小回收空闲时间( `minEvictableIdleTimeMillis` )是5分钟，另外配置空闲检测( `testWhileIdle` )是true，空闲检测间隔时间( `timeBetweenEvictionRunsMillis` )为60s。
+10. 查看应用全局库数据源配置，最小空闲连接数( `minIdle` )为5，最小回收空闲时间( `minEvictableIdleTimeMillis` )是5分钟，另外配置空闲检测( `testWhileIdle` )是true，空闲检测间隔时间( `timeBetweenEvictionRunsMillis` )为60s。
 
 ```properties
 jdbc.global.driverClassName = com.mysql.jdbc.Driver
@@ -241,14 +241,15 @@ public void shrink(boolean checkTime) {
             continue;
           }
         }
-				// 连接空闲时间
+        // 连接空闲时间
         long idleMillis = currentTimeMillis - connection.getLastActiveTimeMillis();
-				// 空闲时间小于最小回收空闲时间则直接结束循环，这里有点疑惑为什么第一个小于就结束循环
+        // 空闲时间小于最小回收空闲时间则直接结束循环，这里有点疑惑为什么第一个小于就结束循环
+        // 作者回复是后进先出(https://github.com/alibaba/druid/pull/1713)
         if (idleMillis < minEvictableIdleTimeMillis) {
           break;
         }
-        // 在这里有两种情况会被回收，第一种情况一直都不成立，第二种情况只有到空闲时间到8个小时才会成立
-				// 情况一：checkTime = true && i < 0 永远都是不成立
+        // 在这里有两种情况会被回收，第一种情况一直都不成立，第二种情况只有到空闲时间到7个小时才会成立
+        // 情况一：checkTime = true && i < 0 永远都是不成立
         if (checkTime && i < checkCount) {
           evictList.add(connection);
         } else if (idleMillis > maxEvictableIdleTimeMillis) {
@@ -284,14 +285,75 @@ public void shrink(boolean checkTime) {
 
 上面有两种情况被会回收，第一种情况一直都不成立，第二种情况只有空闲时间到8个小时才会成立，而mysql的超时时间是1个小时，导致连接池中维护了失效的连接，而且并没有将其剔除。
 
-11. 在全局库里面添加配置，使其空闲检查能够生效
+11. 在全局库里面添加最大回收空闲时间配置，使其空闲时间超过30分钟就被回收，避免使用默认的7小时空闲才被回收，而mysql在超过一个小时已经将物理连接关闭。
 
 ```properties
 ## 配置最大回收空闲时间为
 maxEvictableIdleTimeMillis = 1800000
 ```
 
-12. 但还有一个疑问，为什么之前其它项目都没有配置，也没发现过类似问题，查看获取连接代码，配置了`TestWhileIdle = true` 则会在获取连接时进行检测是否有效
+12. 服务重启，再次监控异常，发现超过一个小时之后，再次进行频繁更新操作，还是有几次存在上述异常。说明空闲回收并没有生效，空闲时间=当前时间-连接的上次活跃时间，而此场景感觉是有地方一直在刷新上一次活动时间，导致其一直未达到空闲回收的阈值。
+
+```java
+ long idleMillis = currentTimeMillis - connection.getLastActiveTimeMillis();
+```
+
+13. 查看Druid销毁连接定时任务，发现在循环内部，如果存在物理连接超时时间配置且大于0，前置会先判断物理连接的存活时间是否超过物理连接超时时间，如果超过则直接加入回收列表，这里很直接，只要超过物理连接超时时间就回收。
+
+```java
+final int checkCount = poolingCount - minIdle;
+final long currentTimeMillis = System.currentTimeMillis();
+for (int i = 0; i < poolingCount; ++i) {
+    DruidConnectionHolder connection = connections[i];
+
+    if (checkTime) {
+        // 如果物理连接超时时间 > 0
+        if (phyTimeoutMillis > 0) {
+            // 物理连接已存活时间 = 当前时间 - 连接的获取时间(不会后续刷新，区别于后面的空闲检测会取上一次活跃时间进行比较)         
+            long phyConnectTimeMillis = currentTimeMillis - connection.getTimeMillis();
+            if (phyConnectTimeMillis > phyTimeoutMillis) {
+                evictList.add(connection);
+                continue;
+            }
+        }
+        
+        long idleMillis = currentTimeMillis - connection.getLastActiveTimeMillis();
+        
+        if (idleMillis < minEvictableIdleTimeMillis) {
+            break;
+        }
+        
+        if (checkTime && i < checkCount) {
+            evictList.add(connection);
+        } else if (idleMillis > maxEvictableIdleTimeMillis) {
+            evictList.add(connection);
+        }
+    } else {
+        if (i < checkCount) {
+            evictList.add(connection);
+        } else {
+            break;
+        }
+    }
+}
+```
+
+14. 因为mysql的超时时间是1个小时，这里我们配置一个小于1小时的时间，只要物理连接超过40分钟就直接回收，不关注其活跃不活跃。
+
+```properties
+# 配置物理连接超时时间(40分钟)
+jdbc.global.phyTimeoutMillis = 2400000
+```
+
+15. 再次重启服务，持续观察，没有再发现此异常( `CommunicationsException` )，更新操作 sharding-jdbc 事务提交也可正常提交。
+
+## 遗留问题
+
+- 为什么空闲检测没有生效？
+
+- removeAbandoned强制180秒回收没有生效？
+
+- 为什么之前其它项目都没有配置，也没发现过类似问题，查看获取连接代码，配置了`TestWhileIdle = true` 则会在获取连接时进行检测是否有效，无效则会剔除。
 
 ```java
 // DruidDataSource
@@ -348,7 +410,7 @@ public DruidPooledConnection getConnectionDirect(long maxWaitMillis) throws SQLE
         discardConnection(null); // 传入null，避免重复关闭
         continue;
       }
-     	// testWhileIdle = true，会检测连接是否有效
+      // testWhileIdle = true，会检测连接是否有效
       if (isTestWhileIdle()) {
         final long currentTimeMillis = System.currentTimeMillis();
         final long lastActiveTimeMillis = poolableConnection.getConnectionHolder().getLastActiveTimeMillis();
@@ -364,7 +426,7 @@ public DruidPooledConnection getConnectionDirect(long maxWaitMillis) throws SQLE
             if (LOG.isDebugEnabled()) {
               LOG.debug("skip not validate connection.");
             }
-						// 无效则丢弃该连接
+            // 无效则丢弃该连接
             discardConnection(realConnection);
             continue;
           }
@@ -399,4 +461,6 @@ public DruidPooledConnection getConnectionDirect(long maxWaitMillis) throws SQLE
 - Sharding-JDBC version 3.0.0.M1 releases features：support batch INSERT (https://github.com/apache/shardingsphere/releases?after=4.0.0)
 - Sharding-JDBC version 3.0.0.M1 support batch INSERT issues(https://github.com/apache/shardingsphere/issues/290)
 - Sharding jdbc do not support batch update(https://github.com/apache/shardingsphere/issues/6665)
-- DruidDataSource Configuration list(https://github.com/alibaba/druid/wiki/DruidDataSource%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7%E5%88%97%E8%A1%A8)
+- DruidDataSource 配置信息列表(https://github.com/alibaba/druid/wiki/DruidDataSource%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7%E5%88%97%E8%A1%A8)
+- 数据库连接空闲回收问题CommunicationsException: Communications link failure(https://github.com/alibaba/druid/issues/1712)
+- minIdle参数引起 的connection time out(https://github.com/alibaba/druid/issues/2656)

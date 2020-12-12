@@ -2,7 +2,7 @@
 JDK/源码/框架/设计模式学习记录
 
 ### Troubleshooting
-- [Sharding-JDBC 事务提交异常](docs/troubleshooting/Sharding-JDBC-transaction-commit-exception.md)
+- [Sharding-JDBC 事务提交异常(Druid空闲检测未剔除已失效连接)](docs/troubleshooting/Sharding-JDBC-transaction-commit-exception.md)
 - [跨域 CORS 图片上传异常](./docs/troubleshooting/CORS-image-upload-exception.md)
 
 ### 设计模式
