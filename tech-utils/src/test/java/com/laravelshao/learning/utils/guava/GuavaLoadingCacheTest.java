@@ -1,4 +1,4 @@
-package com.laravelshao.learning.utils.practice.guava;
+package com.laravelshao.learning.utils.guava;
 
 import com.google.common.base.Optional;
 import com.google.common.cache.CacheBuilder;
@@ -6,6 +6,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
+import org.junit.Test;
 
 import java.time.LocalDateTime;
 
@@ -42,7 +43,13 @@ public class GuavaLoadingCacheTest {
                 }
             });
 
-    public static void main(String[] args) throws InterruptedException {
+    /**
+     * 测试内存缓存
+     *
+     * @throws InterruptedException
+     */
+    @Test
+    public void guavaLoadingCache() throws InterruptedException {
 
         for (int i = 0; i < 10; i++) {
             String time = timeCache.getUnchecked("1").orNull();
@@ -58,4 +65,5 @@ public class GuavaLoadingCacheTest {
             Thread.sleep(1000);
         }
     }
+
 }

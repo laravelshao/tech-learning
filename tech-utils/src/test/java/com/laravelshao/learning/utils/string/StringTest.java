@@ -1,6 +1,7 @@
-package com.laravelshao.learning.utils.practice.string;
+package com.laravelshao.learning.utils.string;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
 
 /**
  * @author qinghua.shao
@@ -9,7 +10,11 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class StringTest {
 
-    public static void main(String[] args) {
+    /**
+     * 截取指定字符串之间的字符串
+     */
+    @Test
+    public void substringBetween() {
         System.out.println(StringUtils.substringBetween("tag456tag", "tag"));
     }
 }

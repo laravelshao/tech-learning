@@ -1,4 +1,4 @@
-package com.laravelshao.learning.utils.practice.excel;
+package com.laravelshao.learning.utils.excel;
 
 import com.alibaba.excel.EasyExcel;
 

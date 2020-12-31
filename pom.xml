@@ -38,6 +38,7 @@
         <module>tech-reactor</module>
         <module>tech-rxjava</module>
         <module>tech-qlexpress</module>
+        <module>tech-drools</module>
     </modules>
     <packaging>pom</packaging>
 
