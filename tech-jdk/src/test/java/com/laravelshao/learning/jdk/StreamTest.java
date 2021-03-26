@@ -112,7 +112,6 @@ public class StreamTest {
         System.out.println("集合中平均值：" + collect.getAverage());
     }
 
-
     /**
      * 最大值
      */
@@ -131,6 +130,23 @@ public class StreamTest {
 
         BigDecimal maxExchangePrice = skuList.stream().map(Sku::getActivityPrice).max(BigDecimal::compareTo).get();
         System.out.println(maxExchangePrice);
+    }
+
+    @Test
+    public void mapping() {
+
+        List<Goods> goodsList = new ArrayList<>();
+        goodsList.add(new Goods(1001L, 10011L));
+        goodsList.add(new Goods(1001L, 10012L));
+        goodsList.add(new Goods(1002L, 10021L));
+        goodsList.add(new Goods(1003L, 10031L));
+        goodsList.add(new Goods(1003L, 10032L));
+        goodsList.add(new Goods(1003L, 10033L));
+        goodsList.add(new Goods(1003L, 10034L));
+
+        // 根据goodsId分组并将skuId列表转换为字符类型
+        Map<Long, List<String>> goodsSkuListMap = goodsList.stream().collect(Collectors.groupingBy(Goods::getGoodsId, Collectors.mapping(goods -> String.valueOf(goods.getSkuId()), Collectors.toList())));
+        System.out.println(goodsSkuListMap);
     }
 
 }
