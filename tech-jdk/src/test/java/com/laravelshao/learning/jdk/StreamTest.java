@@ -47,6 +47,22 @@ public class StreamTest {
     }
 
     /**
+     * List => Map 异常(toMap value为空会抛空指针)
+     */
+    @Test
+    public void list2MapException() {
+
+        List<Coupon> couponList = new LinkedList<>();
+        couponList.add(new Coupon(1, "100001"));
+        couponList.add(new Coupon(3, null));
+        couponList.add(new Coupon(6, null));
+
+        Map<Object, String> map = couponList.stream().collect(Collectors.toMap(c -> c.getSourceType(), c -> c.getCouponId()));
+
+        System.out.println(map);
+    }
+
+    /**
      * 排序
      */
     @Test
