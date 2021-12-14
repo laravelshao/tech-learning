@@ -93,7 +93,7 @@
         <QLExpress.version>3.2.4</QLExpress.version>
         <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
         <elasticsearch-rest-high-level-client.version>7.9.2</elasticsearch-rest-high-level-client.version>
-        <log4j-api.version>2.13.2</log4j-api.version>
+        <log4j-api.version>2.16.0</log4j-api.version>
         <log4j-core.version>2.13.2</log4j-core.version>
     </properties>
 
