@@ -86,7 +86,7 @@
         <grpc.version>1.24.0</grpc.version>
         <easyexcel.version>2.1.2</easyexcel.version>
         <jackson-annotations.version>2.9.0</jackson-annotations.version>
-        <postgresql.version>42.2.7</postgresql.version>
+        <postgresql.version>42.2.25</postgresql.version>
         <mongodb.version>3.12.0</mongodb.version>
         <reactor-bom.version>Dysprosium-RELEASE</reactor-bom.version>
         <rxjava.version>2.2.17</rxjava.version>
