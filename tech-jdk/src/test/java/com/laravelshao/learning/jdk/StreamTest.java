@@ -6,7 +6,9 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.IntSummaryStatistics;
 import java.util.LinkedList;
 import java.util.List;
@@ -165,4 +167,17 @@ public class StreamTest {
         System.out.println(goodsSkuListMap);
     }
 
+    /**
+     * 双层列表平铺
+     */
+    @Test
+    public void flatMap() {
+        List<GoodsPolymerBO> goodsPolymerList = new ArrayList<>();
+        goodsPolymerList.add(new GoodsPolymerBO(1001L, 100101L, Arrays.asList(10010101L, 10010102L, 10010103L)));
+        goodsPolymerList.add(new GoodsPolymerBO(2001L, 200101L, Arrays.asList(20010101L, 20010102L, 20010103L)));
+        goodsPolymerList.add(new GoodsPolymerBO(3001L, 300101L, Arrays.asList(30010101L, 30010102L)));
+
+        List<Long> skuIds = goodsPolymerList.stream().map(item -> item.getSkuIds()).flatMap(Collection::stream).collect(Collectors.toList());
+        System.out.println(skuIds);
+    }
 }
