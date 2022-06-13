@@ -39,6 +39,7 @@
         <module>tech-rxjava</module>
         <module>tech-qlexpress</module>
         <module>tech-drools</module>
+        <module>tech-jvm</module>
     </modules>
     <packaging>pom</packaging>
 
