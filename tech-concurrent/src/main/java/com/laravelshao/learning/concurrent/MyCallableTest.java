@@ -3,14 +3,14 @@ package com.laravelshao.learning.concurrent;
 import java.util.concurrent.*;
 
 /**
- * @author shaoqinghua
+ * 实现多线程方式3：实现Callable接口，实现call方法
  */
-public class CallableDemo implements Callable {
+public class MyCallableTest implements Callable {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         ExecutorService executorService = Executors.newFixedThreadPool(1);
-        CallableDemo callableDemo = new CallableDemo();
-        Future<String> future = executorService.submit(callableDemo);
+        MyCallableTest callable = new MyCallableTest();
+        Future<String> future = executorService.submit(callable);
         String res = future.get(); // 阻塞等待返回接口
         System.out.println(res);
         executorService.shutdown();
