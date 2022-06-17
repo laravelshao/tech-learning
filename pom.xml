@@ -74,7 +74,7 @@
         <redisson.version>3.7.1</redisson.version>
         <netty.version>4.1.43.Final</netty.version>
         <msgpack.version>0.6.12</msgpack.version>
-        <fastjson.version>1.2.47</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <amqp-client.version>5.5.3</amqp-client.version>
         <spring-rabbit.version>1.4.0.RELEASE</spring-rabbit.version>
         <guava.version>23.0</guava.version>
