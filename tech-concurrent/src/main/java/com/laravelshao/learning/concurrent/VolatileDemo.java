@@ -1,42 +1,45 @@
 package com.laravelshao.learning.concurrent;
 
+import java.util.concurrent.TimeUnit;
+
 /**
- * @author shaoqinghua
- * @date 2018/9/19
- * @description
+ * volatile 测试
+ *
+ * @author qinghua.shao
+ * @date 2022/6/19
+ * @since 1.0.0
  */
 public class VolatileDemo {
-    public volatile static Boolean stop = false;
 
-    private static int x = 0, y = 0;
-    private static int a = 0, b = 0;
+    static volatile int flag = 0;
 
-    public static void main(String[] args) throws InterruptedException {
-        Thread thread = new Thread(() -> {
-            int i = 0;
-            while (!stop) {
-                i++;
+    public static void main(String[] args) {
+        new Thread() {
+
+            public void run() {
+                int localFlag = flag;
+                while (true) {
+                    if (localFlag != flag) {
+                        System.out.println("读取到了修改后的标志位：" + flag);
+                        localFlag = flag;
+                    }
+                }
             }
-        });
-        thread.start();
-        System.out.println("begin start thread");
-        Thread.sleep(1000);
-        stop = true;
+        }.start();
 
-//        Thread t1 = new Thread(() -> {
-//            a = 1;
-//            x = b;
-//        });
-//        Thread t2 = new Thread(() -> {
-//            b = 1;
-//            y = a;
-//        });
-//        t1.start();
-//        t2.start();
-//        t1.join();
-//        t2.join();
-//        System.out.println("x=" + x + "->y=" + y);
-
-
+        new Thread() {
+            public void run() {
+                int localFlag = flag;
+                while (true) {
+                    System.out.println("标志位被修改为了：" + ++localFlag);
+                    flag = localFlag;
+                    try {
+                        TimeUnit.SECONDS.sleep(2);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
     }
 }
