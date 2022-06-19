@@ -1,4 +1,4 @@
-package com.laravelshao.learning.concurrent;
+package com.laravelshao.learning.concurrent.thread;
 
 /**
  * 实现多线程方式2：实现Runnable接口，实现run方法

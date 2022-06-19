@@ -1,4 +1,4 @@
-package com.laravelshao.learning.concurrent;
+package com.laravelshao.learning.concurrent.thread;
 
 /**
  * 实现多线程方式1：继承Thread类，重写run方法

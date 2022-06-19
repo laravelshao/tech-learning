@@ -1,4 +1,4 @@
-package com.laravelshao.learning.concurrent;
+package com.laravelshao.learning.concurrent.thread;
 
 import java.util.concurrent.*;
 
