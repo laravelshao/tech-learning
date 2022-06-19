@@ -1,5 +1,5 @@
 # tech-learning
-JDK/源码/框架/设计模式学习记录
+JDK/并发/JVM/源码/框架/设计模式学习记录
 
 ### Troubleshooting
 - [Sharding-JDBC 事务提交异常(Druid空闲检测未剔除已失效连接)](docs/troubleshooting/Sharding-JDBC-transaction-commit-exception.md)
