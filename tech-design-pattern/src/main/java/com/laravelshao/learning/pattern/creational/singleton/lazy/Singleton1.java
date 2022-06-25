@@ -2,7 +2,7 @@ package com.laravelshao.learning.pattern.creational.singleton.lazy;
 
 
 /**
- * 单例模式懒汉式：考虑线程安全(双重检验锁实现)
+ * 单例模式懒汉式：考虑线程安全(双重检验锁实现，并考虑多线程内存可见性问题)
  *
  * @author shaoqinghua
  * @date 2016/3/3
@@ -13,7 +13,12 @@ public class Singleton1 {
     private Singleton1() {
     }
 
-    private static Singleton1 instance = null;
+    /**
+     * 需要使用 volatile 关键字，因为对于多线程情况下，其中一个线程加上同步锁后，其它线程将等待。
+     * 当加锁成功线程执行完毕之后，会有其它线程进入执行，这个时候如果没有 volatile 修饰，那么上
+     * 面获取到锁的线程实例化的对象，对于其它线程来说是不可见的，会导致重复实例化对象。
+     */
+    private static volatile Singleton1 instance = null;
 
     public static Singleton1 getInstance() {
         /*
