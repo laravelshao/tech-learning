@@ -2,7 +2,7 @@ package com.laravelshao.learning.pattern.creational.singleton.lazy;
 
 
 /**
- * 单例模式懒汉式：考虑线程安全(双重检验锁实现，并考虑多线程内存可见性问题)
+ * 单例模式懒汉式：考虑线程安全(双重检验锁实现，并考虑指令重排序问题)
  *
  * @author shaoqinghua
  * @date 2016/3/3
@@ -14,9 +14,18 @@ public class Singleton1 {
     }
 
     /**
-     * 需要使用 volatile 关键字，因为对于多线程情况下，其中一个线程加上同步锁后，其它线程将等待。
-     * 当加锁成功线程执行完毕之后，会有其它线程进入执行，这个时候如果没有 volatile 修饰，那么上
-     * 面获取到锁的线程实例化的对象，对于其它线程来说是不可见的，会导致重复实例化对象。
+     * 需要使用 volatile 关键字，解决的不是可见性问题，而是指令重排问题，单例对象实例化时，
+     * synchronized 可以保证立马刷入主内存，其它线程也能强制从主内存中加载。
+     * <p>
+     * 实例化对象包含：
+     * 1.分配对象的内存空间
+     * 2.初始化对象
+     * 3.设置 instance 指向刚分配的内存地址
+     * <p>
+     * 指令重排之后可能会出现：步骤3在步骤2前面
+     * 当 线程A 执行到同步代码块内，发生了指令重排序，先执行将对象的引用赋值给了 static instance，
+     * 那么此时 线程B 执行到同步代码块外面的 if 判断，就会发现 instance 不为 null，就继续执行返回，
+     * 但此时 线程A 还未将构造方法初始完毕。
      */
     private static volatile Singleton1 instance = null;
 
