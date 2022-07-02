@@ -10,7 +10,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * @date 2019/2/10
  * @description 读写锁测试(测试缓存读取及更新)
  */
-public class ReentrantReadWriteLockDemo {
+public class ReentrantReadWriteLockTest {
 
     static Map<String, Object> cacheMap = new HashMap<>();
 
