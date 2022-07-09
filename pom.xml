@@ -40,6 +40,7 @@
         <module>tech-qlexpress</module>
         <module>tech-drools</module>
         <module>tech-jvm</module>
+        <module>tech-scene</module>
     </modules>
     <packaging>pom</packaging>
 
