@@ -3,8 +3,10 @@ package com.laravelshao.learning.concurrent.aqs.countdownlatch;
 import java.util.concurrent.CountDownLatch;
 
 /**
+ * CountDownLatch 测试
+ *
  * @author qinghua.shao
- * @date 2020/7/16
+ * @date 2018/5/19
  * @since 1.0.0
  */
 public class CountDownLatchTest {

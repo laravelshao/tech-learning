@@ -1,42 +1,39 @@
 package com.laravelshao.learning.concurrent.aqs.cyclicbarrier;
 
+import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
 /**
- * Created by shaoqinghua on 2018/5/19.
+ * CyclicBarrier和CountDownLatch的区别
+ * CountDownLatch的计数器只能使用一次，而CyclicBarrier的计数器可以使用reset()方法重置。
+ * 所以CyclicBarrier能处理更为复杂的业务场景。例如，如果计算发生错误，可以重置计数器，并让线程重新执行一次。
+ *
+ * <p>CyclicBarrier还提供其他有用的方法，
+ * getNumberWaiting()：获取CyclicBarrier阻塞的线程数量
+ * isBroken()：获取阻塞的线程是否被中断
+ *
+ * @author qinghua.shao
+ * @date 2018/5/19
+ * @since 1.0.0
  */
 public class CyclicBarrierTest2 {
 
-    /**
-     * CyclicBarrier(int parties, Runnable barrierAction)：
-     * 用于在线程到达屏障时，优先执行barrierAction，方便执行更复杂的业务场景
-     */
-    static CyclicBarrier c = new CyclicBarrier(2, new A());
+    static CyclicBarrier c = new CyclicBarrier(2);
 
-    public static void main(String[] args) {
-        new Thread(() -> {
+    public static void main(String[] args) throws InterruptedException, BrokenBarrierException {
+        Thread thread = new Thread(() -> {
             try {
                 c.await();
             } catch (Exception e) {
-
             }
-            System.out.println(1);
-        }).start();
-
+        });
+        thread.start();
+        thread.interrupt();
         try {
             c.await();
         } catch (Exception e) {
-
+            System.out.println(c.isBroken());
         }
-        System.out.println(2);
     }
 
-    static class A implements Runnable {
-
-        @Override
-        public void run() {
-            System.out.println(3);
-        }
-
-    }
 }

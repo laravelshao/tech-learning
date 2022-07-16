@@ -3,7 +3,9 @@ package com.laravelshao.learning.concurrent.aqs.countdownlatch;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * Created by shaoqinghua on 2018/5/19.
+ * @author qinghua.shao
+ * @date 2018/5/19
+ * @since 1.0.0
  */
 public class CountDownLatchCase {
 

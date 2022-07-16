@@ -5,7 +5,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Created by shaoqinghua on 2018/5/19.
+ * Exchanger 测试
+ *
+ * @author qinghua.shao
+ * @date 2018/5/19
+ * @since 1.0.0
  */
 public class ExchangerTest {
 
@@ -18,7 +22,7 @@ public class ExchangerTest {
      * <p>如果两个线程有一个没有执行exchange()方法，则会一直等待，如果担心有特殊情况发生，
      * 避免一直等待，可以使用exchange（V x，longtimeout，TimeUnit unit）设置最大等待时长。
      */
-    private static final Exchanger<String> exgr = new Exchanger<String>();
+    private static final Exchanger<String> exchanger = new Exchanger<String>();
 
     private static ExecutorService threadPool = Executors.newFixedThreadPool(2);
 
@@ -28,7 +32,7 @@ public class ExchangerTest {
             try {
                 String A = "银行流水A";// A录入银行流水数据
                 Thread.sleep(4000);
-                exgr.exchange(A);
+                exchanger.exchange(A);
             } catch (InterruptedException e) {
             }
         });
@@ -36,7 +40,7 @@ public class ExchangerTest {
         threadPool.execute(() -> {
             try {
                 String B = "银行流水B";// B录入银行流水数据
-                String A = exgr.exchange("B"); //得到A值
+                String A = exchanger.exchange("B"); //得到A值
                 System.out.println("A和B数据是否一致：" + A.equals(B) + "，A录入的是：" + A + "，B录入是：" + B);
             } catch (InterruptedException e) {
             }
@@ -44,5 +48,4 @@ public class ExchangerTest {
 
         threadPool.shutdown();
     }
-
 }

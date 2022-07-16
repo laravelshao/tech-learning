@@ -5,7 +5,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
 /**
- * Created by shaoqinghua on 2018/5/19.
+ * Semaphore 测试
+ *
+ * @author qinghua.shao
+ * @date 2020/7/16
+ * @since 1.0.0
  */
 public class SemaphoreTest {
 

@@ -1,10 +1,11 @@
 package com.laravelshao.learning.concurrent.aqs.countdownlatch;
 
 /**
- * Created by shaoqinghua on 2018/5/19.
+ * @author qinghua.shao
+ * @date 2018/5/19
+ * @since 1.0.0
  */
 public class JoinCountDownLatchCase {
-
 
     public static void main(String[] args) throws InterruptedException {
         /**
@@ -27,5 +28,4 @@ public class JoinCountDownLatchCase {
 
         System.out.println("all parser finish");
     }
-
 }
