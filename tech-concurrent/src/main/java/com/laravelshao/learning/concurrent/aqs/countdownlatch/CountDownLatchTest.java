@@ -3,30 +3,54 @@ package com.laravelshao.learning.concurrent.aqs.countdownlatch;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * Created by shaoqinghua on 2018/5/19.
+ * @author qinghua.shao
+ * @date 2020/7/16
+ * @since 1.0.0
  */
 public class CountDownLatchTest {
 
-    /**
-     * 构造函数中的参数表示需要执行2次countDown方法才能释放锁
-     */
-    static CountDownLatch c = new CountDownLatch(2);
+    public static void main(String[] args) throws Exception {
 
-    public static void main(String[] args) throws InterruptedException {
-        /**
-         * 需求：解析Excel中多个sheet数据，使用多线程每个线程解析一个sheet数据，所有sheet解析完成，程序提示解析完成
-         * 上面需求实现主线程等待所有线程完成sheet的解析操作（使用CountDownLatch实现）
-         */
+        CountDownLatch countDownLatch = new CountDownLatch(2);
 
-        new Thread(() -> {
-            System.out.println(1);
-            c.countDown();
-            System.out.println(2);
-            c.countDown();
-        }).start();
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000L);
+                    System.out.println("线程1休眠2秒......");
+                    Thread.sleep(1000L);
+                    System.out.println("线程1准备执行countDown操作......");
+                    countDownLatch.countDown();
+                    System.out.println("线程1完成执行countDown操作......");
 
-        //线程等待
-        c.await();
-        System.out.println("3");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
+
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000L);
+                    System.out.println("线程2休眠2秒......");
+                    Thread.sleep(1000L);
+                    System.out.println("线程2准备执行countDown操作......");
+                    countDownLatch.countDown();
+                    System.out.println("线程2完成执行countDown操作......");
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
+
+        System.out.println("main线程执行countDownLatch的await方法，将会阻塞等待......");
+        countDownLatch.await();
+        System.out.println("所有线程执行完成，main线程的await等待阻塞结束......");
     }
 }

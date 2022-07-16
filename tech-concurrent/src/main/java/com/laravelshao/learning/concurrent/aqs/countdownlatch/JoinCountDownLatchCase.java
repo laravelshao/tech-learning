@@ -3,7 +3,7 @@ package com.laravelshao.learning.concurrent.aqs.countdownlatch;
 /**
  * Created by shaoqinghua on 2018/5/19.
  */
-public class JoinCountDownLatchTest {
+public class JoinCountDownLatchCase {
 
 
     public static void main(String[] args) throws InterruptedException {
