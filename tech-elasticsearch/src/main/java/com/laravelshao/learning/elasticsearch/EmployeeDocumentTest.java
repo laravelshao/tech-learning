@@ -12,8 +12,8 @@ import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.common.xcontent.XContentFactory;
+import org.elasticsearch.xcontent.XContentBuilder;
+import org.elasticsearch.xcontent.XContentFactory;
 
 /**
  * es document 增删改查测试
@@ -22,7 +22,7 @@ import org.elasticsearch.common.xcontent.XContentFactory;
  * @date 2019/8/20
  * @since 1.0.0
  */
-public class DocumentTest {
+public class EmployeeDocumentTest {
 
     public static void main(String[] args) throws Exception {
 
@@ -32,11 +32,11 @@ public class DocumentTest {
         // 创建员工doc
         //createEmployee(client);
         // 获取员工doc
-        //getEmployee(client);
+        getEmployee(client);
         // 修改员工doc
         //updateEmployee(client);
         // 删除员工doc
-        deleteEmployee(client);
+        //deleteEmployee(client);
 
         client.close();
     }
@@ -58,7 +58,7 @@ public class DocumentTest {
                 .field("salary", 10000)
                 .endObject();
 
-        IndexRequest request = new IndexRequest("company").id("1").source(builder);
+        IndexRequest request = new IndexRequest("employee").id("1").source(builder);
         IndexResponse response = client.index(request, RequestOptions.DEFAULT);
         System.out.println(response.getResult());
     }
@@ -71,7 +71,7 @@ public class DocumentTest {
      */
     private static void getEmployee(RestHighLevelClient client) throws Exception {
 
-        GetRequest request = new GetRequest("company", "1");
+        GetRequest request = new GetRequest("employee", "1");
         GetResponse response = client.get(request, RequestOptions.DEFAULT);
         System.out.println(response.getSourceAsString());
     }
@@ -89,7 +89,7 @@ public class DocumentTest {
                 .field("position", "technique manager")
                 .endObject();
 
-        UpdateRequest request = new UpdateRequest("company", "1").doc(builder);
+        UpdateRequest request = new UpdateRequest("employee", "1").doc(builder);
         UpdateResponse response = client.update(request, RequestOptions.DEFAULT);
         System.out.println(response.getResult());
     }
@@ -102,7 +102,7 @@ public class DocumentTest {
      */
     private static void deleteEmployee(RestHighLevelClient client) throws Exception {
 
-        DeleteRequest request = new DeleteRequest("company", "1");
+        DeleteRequest request = new DeleteRequest("employee", "1");
         DeleteResponse response = client.delete(request, RequestOptions.DEFAULT);
         System.out.println(response.getResult());
     }

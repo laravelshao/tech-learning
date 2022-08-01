@@ -7,10 +7,10 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.xcontent.XContentFactory;
 
 /**
  * es搜索测试
@@ -19,7 +19,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
  * @date 2020/10/3
  * @since 1.0.0
  */
-public class SearchTest {
+public class EmployeeSearchTest {
 
     public static void main(String[] args) throws Exception {
 
@@ -27,12 +27,14 @@ public class SearchTest {
                 RestClient.builder(new HttpHost("localhost", 9200, "http")));
 
         // 准备数据
-        //prepareData(client);
+        prepareData(client);
         // 存在1s延迟查询出刚添加数据
         //Thread.sleep(2000L);
 
         // 执行搜索
-        executeSearch(client);
+        //executeSearch(client);
+
+        client.close();
     }
 
     /**
@@ -68,7 +70,7 @@ public class SearchTest {
      */
     private static void prepareData(RestHighLevelClient client) throws Exception {
 
-        client.index(new IndexRequest("company").id("1").source(
+        client.index(new IndexRequest("employee").id("1").source(
                 XContentFactory.jsonBuilder()
                         .startObject()
                         .field("name", "jack")
@@ -79,7 +81,7 @@ public class SearchTest {
                         .field("salary", 10000)
                         .endObject()), RequestOptions.DEFAULT);
 
-        client.index(new IndexRequest("company").id("2").source(
+        client.index(new IndexRequest("employee").id("2").source(
                 XContentFactory.jsonBuilder()
                         .startObject()
                         .field("name", "marry")
@@ -90,7 +92,7 @@ public class SearchTest {
                         .field("salary", 12000)
                         .endObject()), RequestOptions.DEFAULT);
 
-        client.index(new IndexRequest("company").id("3").source(
+        client.index(new IndexRequest("employee").id("3").source(
                 XContentFactory.jsonBuilder()
                         .startObject()
                         .field("name", "tom")
@@ -101,7 +103,7 @@ public class SearchTest {
                         .field("salary", 11000)
                         .endObject()), RequestOptions.DEFAULT);
 
-        client.index(new IndexRequest("company").id("4").source(
+        client.index(new IndexRequest("employee").id("4").source(
                 XContentFactory.jsonBuilder()
                         .startObject()
                         .field("name", "jen")
@@ -112,7 +114,7 @@ public class SearchTest {
                         .field("salary", 7000)
                         .endObject()), RequestOptions.DEFAULT);
 
-        client.index(new IndexRequest("company").id("5").source(
+        client.index(new IndexRequest("employee").id("5").source(
                 XContentFactory.jsonBuilder()
                         .startObject()
                         .field("name", "mike")
