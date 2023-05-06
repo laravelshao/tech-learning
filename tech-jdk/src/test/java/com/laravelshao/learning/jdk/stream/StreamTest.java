@@ -1,6 +1,10 @@
-package com.laravelshao.learning.jdk;
+package com.laravelshao.learning.jdk.stream;
 
 import com.google.common.collect.Lists;
+import com.laravelshao.learning.jdk.Coupon;
+import com.laravelshao.learning.jdk.Goods;
+import com.laravelshao.learning.jdk.GoodsPolymerBO;
+import com.laravelshao.learning.jdk.Sku;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -8,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.IntSummaryStatistics;
 import java.util.LinkedList;
 import java.util.List;
