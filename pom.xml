@@ -89,7 +89,7 @@
         <quartz.version>2.3.2</quartz.version>
         <protobuf.version>3.16.3</protobuf.version>
         <thrift.version>0.14.0</thrift.version>
-        <grpc.version>1.24.0</grpc.version>
+        <grpc.version>1.53.0</grpc.version>
         <easyexcel.version>2.1.2</easyexcel.version>
         <jackson-annotations.version>2.9.0</jackson-annotations.version>
         <postgresql.version>42.3.8</postgresql.version>
