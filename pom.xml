@@ -38,7 +38,6 @@
         <module>tech-reactor</module>
         <module>tech-rxjava</module>
         <module>tech-qlexpress</module>
-        <module>tech-drools</module>
         <module>tech-jvm</module>
         <module>tech-scene</module>
     </modules>
