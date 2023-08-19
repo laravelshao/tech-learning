@@ -1,7 +1,7 @@
 package com.laravelshao.learning.spi.dubbo;
 
-import com.alibaba.dubbo.common.extension.ExtensionLoader;
-import com.alibaba.dubbo.rpc.Protocol;
+import org.apache.dubbo.common.extension.ExtensionLoader;
+import org.apache.dubbo.rpc.Protocol;
 
 /**
  * @author shaoqinghua

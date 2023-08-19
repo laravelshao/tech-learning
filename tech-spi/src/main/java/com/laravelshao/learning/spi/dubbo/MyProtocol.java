@@ -1,15 +1,17 @@
 package com.laravelshao.learning.spi.dubbo;
 
-import com.alibaba.dubbo.common.URL;
-import com.alibaba.dubbo.rpc.Exporter;
-import com.alibaba.dubbo.rpc.Invoker;
-import com.alibaba.dubbo.rpc.Protocol;
-import com.alibaba.dubbo.rpc.RpcException;
+
+import org.apache.dubbo.common.URL;
+import org.apache.dubbo.rpc.Exporter;
+import org.apache.dubbo.rpc.Invoker;
+import org.apache.dubbo.rpc.Protocol;
+import org.apache.dubbo.rpc.RpcException;
 
 /**
+ * DUBBO 扩展自定义协议
+ *
  * @author shaoqinghua
  * @date 2018/10/28
- * @description dubbo扩展自定义协议
  */
 public class MyProtocol implements Protocol {
     @Override
