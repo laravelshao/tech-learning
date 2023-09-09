@@ -1,4 +1,4 @@
-package com.laravelshao.learning.concurrent;
+package com.laravelshao.learning.concurrent.volatiletest;
 
 import java.util.concurrent.TimeUnit;
 
@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2022/6/19
  * @since 1.0.0
  */
-public class VolatileDemo {
+public class VolatileTest1 {
 
     static volatile int flag = 0;
 
