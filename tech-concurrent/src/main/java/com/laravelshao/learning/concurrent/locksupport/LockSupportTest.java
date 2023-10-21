@@ -1,9 +1,9 @@
-package com.laravelshao.learning.concurrent.lock;
+package com.laravelshao.learning.concurrent.locksupport;
 
 import java.util.concurrent.locks.LockSupport;
 
 /**
- * park 测试
+ * LockSupport 测试
  * <p>
  * LockSupport#park()：挂起当前线程并阻塞
  * LockSupport#unpark(thread1)：唤醒指定线程
@@ -12,7 +12,7 @@ import java.util.concurrent.locks.LockSupport;
  * @date 2022/7/3
  * @since 1.0.0
  */
-public class ParkTest {
+public class LockSupportTest {
 
     public static void main(String[] args) {
 
