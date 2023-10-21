@@ -32,6 +32,7 @@ public class ExchangerTest {
             try {
                 String A = "银行流水A";// A录入银行流水数据
                 Thread.sleep(4000);
+                System.out.println("A交换数据：" + A);
                 exchanger.exchange(A);
             } catch (InterruptedException e) {
             }
@@ -40,7 +41,8 @@ public class ExchangerTest {
         threadPool.execute(() -> {
             try {
                 String B = "银行流水B";// B录入银行流水数据
-                String A = exchanger.exchange("B"); //得到A值
+                System.out.println("B交换数据：" + B);
+                String A = exchanger.exchange(B); //得到A值
                 System.out.println("A和B数据是否一致：" + A.equals(B) + "，A录入的是：" + A + "，B录入是：" + B);
             } catch (InterruptedException e) {
             }
