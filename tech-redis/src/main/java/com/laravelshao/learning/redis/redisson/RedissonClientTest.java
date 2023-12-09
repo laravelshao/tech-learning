@@ -5,9 +5,8 @@ import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 
 /**
- * @author shaoqinghua
+ * @author qinghua.shao
  * @date 2018/11/17
- * @description
  */
 public class RedissonClientTest {
 

@@ -8,9 +8,8 @@ import org.redisson.config.Config;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author shaoqinghua
+ * @author qinghua.shao
  * @date 2018/11/17
- * @description
  */
 public class RedissonLockTest {
 
