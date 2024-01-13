@@ -86,9 +86,9 @@
         value 要设置的简单值
         ref 复杂值（bean对象）
          -->
-        <constructor-arg index="0" value="1001"></constructor-arg>
-        <constructor-arg name="name" value="阿斯顿马丁"></constructor-arg>
-        <constructor-arg type="java.lang.Double" value="9.8d"></constructor-arg>
+        <constructor-arg index="0" value="1001"/>
+        <constructor-arg name="name" value="阿斯顿马丁"/>
+        <constructor-arg type="java.lang.Double" value="9.8d"/>
     </bean>
     <!--方式2 setter方法属性注入-->
     <bean id="person" class="com.laravelshao.learning.spring.di.xml.Person">

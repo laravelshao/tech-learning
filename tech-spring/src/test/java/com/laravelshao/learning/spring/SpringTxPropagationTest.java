@@ -9,9 +9,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Propagation;
 
 /**
+ * Spring 事务传播行为测试
+ *
  * @author shaoqinghua
  * @date 2018/5/23
- * @description Spring事务传播测试
  * @see <a href="https://segmentfault.com/a/1190000013341344#articleHeader17">Spring事务传播行为详解</a>
  * @see <a href="https://github.com/TmTse/transaction-test">transaction测试demo</a>
  */
@@ -38,7 +39,9 @@ public class SpringTxPropagationTest {
     }
 
     /**
-     * 测试结果："张三"插入，"李四"未插入。
+     * 外围方法未开启事务，分别调用 {@link Propagation#REQUIRED} 修饰
+     * 的内部方法会开启内部方法自己的事务，且开启的事务相互独立，互不影响。子方法A正常执行，子方法B抛出异常。
+     * <p>测试结果："张三"插入，"李四"未插入。
      * 外围方法没有事务，插入"张三"、"李四"方法都在自己的事务中独立运行，
      * 所以插入"李四"方法抛出异常只会回滚插入"李四"方法，插入"张三"方法不受影响。
      */

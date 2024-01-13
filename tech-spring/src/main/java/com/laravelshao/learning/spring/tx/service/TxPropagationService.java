@@ -8,13 +8,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * @author shaoqinghua
+ * 事务测试服务
+ *
+ * @author qinghua.shao
  * @date 2019/5/23
- * @description 事务测试服务
  */
 @Service
 public class TxPropagationService {
-
 
     @Autowired
     private User1Service user1Service;

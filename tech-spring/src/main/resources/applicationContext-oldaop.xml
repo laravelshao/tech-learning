@@ -10,11 +10,11 @@
 
     <!--确定目标对象bean-->
     <!--基于接口类-->
-    <bean id="customerService" class="com.laravelshao.learning.spring.aop.CustomerServiceImpl"></bean>
+    <bean id="customerService" class="com.laravelshao.learning.spring.aop.CustomerServiceImpl"/>
     <!--基于一般类-->
-    <bean id="productService" class="com.laravelshao.learning.spring.aop.ProductService"></bean>
+    <bean id="productService" class="com.laravelshao.learning.spring.aop.ProductService"/>
     <!--配置通知-->
-    <bean id="timeLogAdvice" class="com.laravelshao.learning.spring.aop.old.TimeLogInterceptor"></bean>
+    <bean id="timeLogAdvice" class="com.laravelshao.learning.spring.aop.old.TimeLogInterceptor"/>
 
     <!--配置切入点和切面 aop:config-->
     <aop:config>
