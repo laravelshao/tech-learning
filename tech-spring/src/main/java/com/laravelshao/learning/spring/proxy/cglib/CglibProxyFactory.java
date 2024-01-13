@@ -6,9 +6,13 @@ import org.springframework.cglib.proxy.MethodProxy;
 
 import java.lang.reflect.Method;
 
+
 /**
- * Created by shaoqinghua on 2017/12/18.
  * CGLIB动态代理工厂类
+ *
+ * @author qinghua.shao
+ * @date 2017/12/18
+ * @since 1.0
  */
 public class CglibProxyFactory implements MethodInterceptor {
 
@@ -20,8 +24,6 @@ public class CglibProxyFactory implements MethodInterceptor {
 
     /**
      * 获取代理对象
-     *
-     * @return
      */
     public Object getProxyObject() {
         Enhancer enhancer = new Enhancer();

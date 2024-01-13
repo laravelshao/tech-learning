@@ -5,8 +5,11 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 /**
- * Created by shaoqinghua on 2017/12/18.
- * JDK动态代理工厂类
+ * JDK动态代理工厂类(JDK动态代理的类必须实现接口)
+ *
+ * @author qinghua.shao
+ * @date 2017/12/18
+ * @since 1.0
  */
 public class JdkProxyFactory implements InvocationHandler {
 
@@ -18,8 +21,6 @@ public class JdkProxyFactory implements InvocationHandler {
 
     /**
      * 获取代理对象，当前类继承InvocationHandler
-     *
-     * @return
      */
     public Object getProxyObject() {
         return Proxy.newProxyInstance(target.getClass().getClassLoader(), target.getClass().getInterfaces(), this);

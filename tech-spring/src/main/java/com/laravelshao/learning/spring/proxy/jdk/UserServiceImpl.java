@@ -1,7 +1,10 @@
 package com.laravelshao.learning.spring.proxy.jdk;
 
+
 /**
- * Created by shaoqinghua on 2017/12/18.
+ * @author qinghua.shao
+ * @date 2017/12/18
+ * @since 1.0
  */
 public class UserServiceImpl implements UserService {
 
