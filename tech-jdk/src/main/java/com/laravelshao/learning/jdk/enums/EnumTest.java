@@ -1,7 +1,4 @@
-package com.laravelshao.learning.jdk;
-
-import com.laravelshao.learning.jdk.enums.PriceHandleTypeEnum;
-import org.junit.Test;
+package com.laravelshao.learning.jdk.enums;
 
 /**
  * 枚举说明：
@@ -17,8 +14,7 @@ import org.junit.Test;
  */
 public class EnumTest {
 
-    @Test
-    public void enumTest() {
+    public static void main(String[] args) {
         PriceHandleTypeEnum priceHandleTypeEnum = PriceHandleTypeEnum.byCode(1);
         PriceHandleTypeEnum priceHandleTypeEnum2 = PriceHandleTypeEnum.byCode(2);
         PriceHandleTypeEnum priceHandleTypeEnum3 = PriceHandleTypeEnum.byCode(3);

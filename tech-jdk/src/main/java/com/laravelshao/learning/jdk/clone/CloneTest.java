@@ -1,4 +1,4 @@
-package com.laravelshao.learning.serialization.clone;
+package com.laravelshao.learning.jdk.clone;
 
 import java.io.IOException;
 
@@ -34,7 +34,5 @@ public class CloneTest {
 
         System.out.println(p1);
         System.out.println(p2);
-
     }
-
 }

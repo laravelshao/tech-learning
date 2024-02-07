@@ -1,4 +1,4 @@
-package com.laravelshao.learning.serialization.clone;
+package com.laravelshao.learning.jdk.clone;
 
 import lombok.Data;
 

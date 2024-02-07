@@ -21,7 +21,6 @@
         <module>tech-zookeeper</module>
         <module>tech-redis</module>
         <module>tech-netty</module>
-        <module>tech-serialization</module>
         <module>tech-rabbitmq</module>
         <module>tech-dubbo</module>
         <module>tech-data-structures</module>
