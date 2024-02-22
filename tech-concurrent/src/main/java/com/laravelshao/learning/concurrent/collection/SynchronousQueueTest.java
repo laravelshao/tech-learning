@@ -15,6 +15,10 @@ public class SynchronousQueueTest {
 
         SynchronousQueue<String> queue = new SynchronousQueue<>();
 
+        // 写
         queue.put("张三");
+
+        // 读
+        queue.take();
     }
 }
