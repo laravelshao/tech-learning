@@ -24,18 +24,18 @@ public class Person implements Cloneable, Serializable {
         this.age = age;
     }
 
-    ///**
-    // * 深克隆实现一：引用对象也实现Cloneable接口，重写clone方法
-    // *
-    // * @return
-    // * @throws CloneNotSupportedException
-    // */
-    //@Override
-    //protected Person clone() throws CloneNotSupportedException {
-    //    Person person = (Person) super.clone();
-    //    person.email = email.clone();
-    //    return person;
-    //}
+    /**
+     * 深克隆实现一：引用对象也实现Cloneable接口，重写clone方法
+     *
+     * @return
+     * @throws CloneNotSupportedException
+     */
+    @Override
+    protected Person clone() throws CloneNotSupportedException {
+        Person person = (Person) super.clone();
+        person.email = email.clone();
+        return person;
+    }
 
     /**
      * 深克隆实现二：序列化实现

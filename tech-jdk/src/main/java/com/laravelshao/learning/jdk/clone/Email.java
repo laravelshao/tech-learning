@@ -16,8 +16,8 @@ public class Email implements Cloneable, Serializable {
 
     private String content;
 
-    //@Override
-    //protected Email clone() throws CloneNotSupportedException {
-    //    return (Email) super.clone();
-    //}
+    @Override
+    protected Email clone() throws CloneNotSupportedException {
+        return (Email) super.clone();
+    }
 }
