@@ -1,6 +1,7 @@
 package com.laravelshao.learning.collection.list;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -31,25 +32,26 @@ public class ArrayListTest {
         list.add("ddd");
         list.add("eee");
 
-        //1.使用通用Iterator迭代器遍历
-        //for (Iterator it = list.iterator(); it.hasNext(); ) {
-        //    System.out.println(it.next());
-        //}
+        // 1.使用通用Iterator迭代器遍历
+        for (Iterator it = list.iterator(); it.hasNext(); ) {
+            // 遍历同时修改则会抛出并发修改异常 ConcurrentModificationException
+            //list.remove(it.next());
+            System.out.println(it.next());
+        }
 
-        //2.使用List特有的ListIterator迭代器遍历
+        //// 2.使用List特有的ListIterator迭代器遍历
         //for (ListIterator it = list.listIterator(); it.hasNext(); ) {
         //    System.out.println(it.next());
         //}
 
-        //3.使用foreach遍历
+        //// 3.使用foreach遍历
         //for (Object obj : list) {
         //    System.out.println(obj);
         //}
 
-        //4.使用普通for循环遍历
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
-        }
-
+        //// 4.使用普通for循环遍历
+        //for (int i = 0; i < list.size(); i++) {
+        //    System.out.println(list.get(i));
+        //}
     }
 }
