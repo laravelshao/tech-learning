@@ -5,12 +5,12 @@ import lombok.Data;
 import java.io.*;
 
 /**
- * @author shaoqinghua
+ * @author qinghua.shao
  * @date 2019/1/6
- * @description
  */
 @Data
 public class Person implements Cloneable, Serializable {
+    private static final long serialVersionUID = -5229730289987180113L;
 
     private String name;
     private int age;
@@ -25,10 +25,7 @@ public class Person implements Cloneable, Serializable {
     }
 
     /**
-     * 深克隆实现一：引用对象也实现Cloneable接口，重写clone方法
-     *
-     * @return
-     * @throws CloneNotSupportedException
+     * 深克隆实现方式1：引用对象也实现 Cloneable 接口，重写 clone 方法
      */
     @Override
     protected Person clone() throws CloneNotSupportedException {
@@ -38,11 +35,7 @@ public class Person implements Cloneable, Serializable {
     }
 
     /**
-     * 深克隆实现二：序列化实现
-     *
-     * @return
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * 深克隆实现2：序列化实现
      */
     protected Person deepClone() throws IOException, ClassNotFoundException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

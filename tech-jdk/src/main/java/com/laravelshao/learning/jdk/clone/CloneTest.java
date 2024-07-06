@@ -16,9 +16,8 @@ import java.io.IOException;
  * - 方式一：引用对象也实现Cloneable接口，重写clone方法
  * - 方式二：通过序列化实现
  *
- * @author shaoqinghua
+ * @author qinghua.shao
  * @date 2019/1/6
- * @description
  */
 public class CloneTest {
 
@@ -29,13 +28,20 @@ public class CloneTest {
         Person p1 = new Person("haha", 18);
         p1.setEmail(email);
 
+        // 深克隆实现方式1：引用对象也实现 Cloneable 接口，重写 clone 方法
         Person p2 = p1.clone();
-        //Person p2 = p1.deepClone();
         p2.setName("xiaoai");
         p2.setAge(23);
         p2.getEmail().setContent("明天不用上课");
 
+        // 深克隆实现2：序列化实现
+        Person p3 = p1.deepClone();
+        p3.setName("qiqi");
+        p3.setAge(28);
+        p3.getEmail().setContent("明天休假了");
+
         System.out.println(p1);
         System.out.println(p2);
+        System.out.println(p3);
     }
 }
