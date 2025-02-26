@@ -1,15 +1,15 @@
-package com.laravelshao.learning.concurrent.question;
+package com.laravelshao.learning.question.PrintABC;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
+ * 三个线程交替打印ABC(lock / condition实现)
+ *
  * @author shaoqinghua
  * @date 2019/2/11
- * @description 三个线程交替打印ABC(lock / condition实现)
  */
-
 public class PrintABCTask3 {
     private static Lock lock = new ReentrantLock();
     private static Condition A = lock.newCondition();
@@ -17,6 +17,12 @@ public class PrintABCTask3 {
     private static Condition C = lock.newCondition();
 
     private static int count = 0;
+
+    public static void main(String[] args) throws InterruptedException {
+        new ThreadA().start();
+        new ThreadB().start();
+        new ThreadC().start();
+    }
 
     static class ThreadA extends Thread {
         @Override
@@ -76,11 +82,5 @@ public class PrintABCTask3 {
                 lock.unlock();
             }
         }
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        new ThreadA().start();
-        new ThreadB().start();
-        new ThreadC().start();
     }
 }

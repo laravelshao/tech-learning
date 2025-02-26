@@ -1,21 +1,38 @@
-package com.laravelshao.learning.concurrent.question;
+package com.laravelshao.learning.question.PrintABC;
 
 
 /**
+ * 三个线程交替打印ABC(synchronized实现)
+ *
  * @author shaoqinghua
  * @date 2019/2/11
- * @description 三个线程交替打印ABC(synchronized实现)
  */
-public class PrintABCTask implements Runnable {
+public class PrintABCTask2 implements Runnable {
 
     private String name;
     private Object prev;
     private Object self;
 
-    private PrintABCTask(String name, Object prev, Object self) {
+    private PrintABCTask2(String name, Object prev, Object self) {
         this.name = name;
         this.prev = prev;
         this.self = self;
+    }
+
+    public static void main(String[] args) throws Exception {
+        Object a = new Object();
+        Object b = new Object();
+        Object c = new Object();
+        PrintABCTask2 pa = new PrintABCTask2("A", c, a);
+        PrintABCTask2 pb = new PrintABCTask2("B", a, b);
+        PrintABCTask2 pc = new PrintABCTask2("C", b, c);
+
+        new Thread(pa, "线程A").start();
+        Thread.sleep(10);// 保证初始ABC的启动顺序
+        new Thread(pb, "线程B").start();
+        Thread.sleep(10);
+        new Thread(pc, "线程C").start();
+        Thread.sleep(10);
     }
 
     @Override
@@ -41,22 +58,5 @@ public class PrintABCTask implements Runnable {
                 }
             }
         }
-    }
-
-
-    public static void main(String[] args) throws Exception {
-        Object a = new Object();
-        Object b = new Object();
-        Object c = new Object();
-        PrintABCTask pa = new PrintABCTask("A", c, a);
-        PrintABCTask pb = new PrintABCTask("B", a, b);
-        PrintABCTask pc = new PrintABCTask("C", b, c);
-
-        new Thread(pa, "线程A").start();
-        Thread.sleep(10);// 保证初始ABC的启动顺序
-        new Thread(pb, "线程B").start();
-        Thread.sleep(10);
-        new Thread(pc, "线程C").start();
-        Thread.sleep(10);
     }
 }

@@ -1,13 +1,13 @@
-package com.laravelshao.learning.concurrent.question;
+package com.laravelshao.learning.question.PrintNumber;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
+ * 【等待唤醒测试】两个线程交替打印1-100 线程1打印出奇数 线程2打印出偶数(await/signal实现)
+ *
  * @author shaoqinghua
  * @date 2019/2/11
- * @description 等待唤醒测试 两个线程交替打印1-100 线程1打印出奇数 线程2打印出偶数(await/signal实现)
  */
 public class PrintNumberTask2 implements Runnable {
 
