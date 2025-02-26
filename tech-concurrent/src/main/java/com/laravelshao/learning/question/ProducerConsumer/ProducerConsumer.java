@@ -42,7 +42,8 @@ public class ProducerConsumer {
         public void run() {
             try {
                 while (true) {
-                    Integer item = queue.poll(1, TimeUnit.SECONDS); // 等待2分钟，修改为1秒复现无商品时等待过程
+                    //Integer item = queue.poll(2, TimeUnit.MINUTES); // 等待2分钟
+                    Integer item = queue.poll(1, TimeUnit.SECONDS); // 修改为1秒复现无商品时等待过程
                     if (item != null) {
                         System.out.println("Consumed: " + item);
                         TimeUnit.SECONDS.sleep(4); // 15个/分钟，即每4秒消费一个
