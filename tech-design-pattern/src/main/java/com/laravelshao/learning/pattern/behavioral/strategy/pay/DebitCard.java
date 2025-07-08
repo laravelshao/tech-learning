@@ -16,7 +16,7 @@ public class DebitCard extends Card {
     }
 
     @Override
-    protected void exexTransaction(double amount) {
+    protected void execTransaction(double amount) {
         System.out.println("使用支付方式:debit, 金额:[" + amount + "]");
     }
 }

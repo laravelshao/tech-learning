@@ -34,7 +34,7 @@ public abstract class Card implements Payment {
 
     @Override
     public void pay(double amount) {
-        exexTransaction(amount);
+        execTransaction(amount);
     }
 
     /**
@@ -47,6 +47,6 @@ public abstract class Card implements Payment {
      *
      * @param amount
      */
-    protected abstract void exexTransaction(double amount);
+    protected abstract void execTransaction(double amount);
 
 }
