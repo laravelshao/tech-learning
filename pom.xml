@@ -67,7 +67,7 @@
         <jsp-api.version>2.0</jsp-api.version>
         <commons-lang3.version>3.7</commons-lang3.version>
         <commons-io.version>2.14.0</commons-io.version>
-        <commons-fileupload.version>1.5</commons-fileupload.version>
+        <commons-fileupload.version>1.6.0</commons-fileupload.version>
         <kafka-clients.version>0.11.0.2</kafka-clients.version>
         <zookeeper.version>3.7.2</zookeeper.version>
         <zkclient.version>0.10</zkclient.version>
