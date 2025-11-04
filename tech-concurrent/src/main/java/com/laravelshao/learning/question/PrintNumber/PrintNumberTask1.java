@@ -19,10 +19,10 @@ public class PrintNumberTask1 implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        while (i <= 100) {
             synchronized (this) {
-                notify();
                 if (i <= 100) {
+                    notify();
                     System.out.println(Thread.currentThread().getName() + "->" + i);
                     i++;
                     try {
